@@ -54,4 +54,5 @@ It builds on top of many fine projects from the open source community, such as:
 - [Jinja2](http://jinja.pocoo.org)
 - [Markdown](http://pypi.python.org/pypi/Markdown/)
 - [PyYAML](http://pyyaml.org)
+- [sh](https://github.com/amoffat/sh)
 
