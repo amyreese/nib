@@ -9,4 +9,11 @@ sys.path.insert(0, path.join(cwd, 'lib/sh'))
 
 import hammer
 
-hammer.Build('static', 'input', 'output', {}).run()
+options = hammer.yaml.load(path.join(cwd, 'config.defaults'))
+if path.exists('config.local'):
+    options.update(hammer.yaml.load('config.local'))
+
+hammer.Build(options['resource_path'],
+             options['document_path'],
+             options['output_path'],
+             options).run()

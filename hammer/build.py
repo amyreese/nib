@@ -68,15 +68,10 @@ class Build(object):
         return resources
 
     def write_resources(self, resources):
-        hierarchy = set([path.join(self.output_path, path.dirname(r.path)) for r in resources])
-        hierarchy.discard(self.output_path)
-        print('Creating output hierarchy: {}'.format(hierarchy))
-
-        for dir in hierarchy:
-            os.makedirs(dir, exist_ok=True)
-
         for resource in resources:
-            filepath = path.join(self.output_path, resource.path)
+            filepath = path.join(self.output_path,
+                                 self.options['resource_output_path_prefix'],
+                                 resource.path)
             filepath += resource.extension
 
             print('Writing resource {}'.format(filepath))
@@ -148,13 +143,6 @@ class Build(object):
 
 
     def write_documents(self, documents):
-        hierarchy = set([path.join(self.output_path, path.dirname(d.path)) for d in documents])
-        hierarchy.discard(self.output_path)
-        print('Creating output hierarchy: {}'.format(hierarchy))
-
-        for dir in hierarchy:
-            os.makedirs(dir, exist_ok=True)
-
         for document in documents:
             filepath = path.join(self.output_path, document.path)
 
@@ -162,21 +150,37 @@ class Build(object):
             with open(filepath, 'w') as f:
                 f.write(document.content)
 
+    def create_output_hierarchy(self, resources, documents):
+        hierarchy = set()
+
+        for resource in resources:
+            dirname = path.dirname(resource.path)
+            hierarchy.add(path.join(self.output_path,
+                          self.options['resource_output_path_prefix'],
+                          dirname))
+
+        for document in documents:
+            dirname = path.dirname(document.path)
+            hierarchy.add(path.join(self.output_path, dirname))
+
+        print('Creating output hierarchy: {}'.format(hierarchy))
+
+        for dir in hierarchy:
+            os.makedirs(dir, exist_ok=True)
+
     def run(self):
         cwd = os.getcwd()
         os.chdir(self.resource_path)
-
         resources = self.load_resources()
         resources = self.process_resources(resources)
-
         os.chdir(cwd)
-        self.write_resources(resources)
 
         cwd = os.getcwd()
         os.chdir(self.document_path)
-
         documents = self.load_documents()
         documents = self.process_documents(documents)
-
         os.chdir(cwd)
+
+        self.create_output_hierarchy(resources, documents)
+        self.write_resources(resources)
         self.write_documents(documents)

@@ -1,0 +1,4 @@
+document_path: input
+resource_path: static
+output_path: output
+resource_output_path_prefix: static
