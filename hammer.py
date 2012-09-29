@@ -7,3 +7,5 @@ sys.path.insert(0, cwd)
 sys.path.insert(0, path.join(cwd, 'lib'))
 
 import hammer
+
+hammer.Build('input', 'output', {}).run()
