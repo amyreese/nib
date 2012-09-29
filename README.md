@@ -17,14 +17,14 @@ includes a document type, which maps back to a series of predefined document
 processors, as well as arbitrary attributes.
 
 Document processors are then given a list of all documents that match the
-processor's document type, and then return a mapping of paths to documents.
-Processors can also optionally generate a set of "virtual" pages to include
-with its return value, allowing processors to create archives, tag pages,
-and more.
+processor's document type, then returns a modified list of documents.
+Processors can modify existing documents, or optionally generate a set of
+"virtual" pages to include in its return value, allowing processors to create
+archives, tag pages, and more.
 
-Once all document processors have returned a mapping of paths to documents,
-document bodies are run through the Markdown processor, and then passed to
-the appropriate templates for final rendering and output to static files.
+Once all document processors have been run, document bodies are run through
+the Markdown processor, and then passed to the appropriate templates for final
+rendering and output to static files.
 
 Static resources, such as CSS, Javascript, and images, are then matched to
 configurable resource processors and merged with the document output. This

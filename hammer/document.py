@@ -4,6 +4,7 @@ class Document(dict):
     def __init__(self, path=None, type=None, content=None, **kwargs):
         dict.__init__(self, **kwargs)
         self.path = path
+        self.uri = path
         self.type = type
         self.content = content
 

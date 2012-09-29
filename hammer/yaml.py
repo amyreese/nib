@@ -19,3 +19,4 @@ def load(filename, supplement=False):
         return data, documents[0]
     else:
         return data
+
