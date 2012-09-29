@@ -5,7 +5,8 @@ import sys
 cwd = path.abspath(path.dirname(__file__))
 sys.path.insert(0, cwd)
 sys.path.insert(0, path.join(cwd, 'lib'))
+sys.path.insert(0, path.join(cwd, 'lib/sh'))
 
 import hammer
 
-hammer.Build('input', 'output', {}).run()
+hammer.Build('static', 'input', 'output', {}).run()

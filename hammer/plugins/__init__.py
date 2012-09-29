@@ -9,4 +9,3 @@ for filename in files:
     name, ext = path.splitext(filename)
     if ext == '.py':
         importlib.import_module('hammer.plugins.' + name)
-

@@ -2,6 +2,7 @@
 preprocessors = []
 postprocessors = []
 document_processors = {}
+resource_processors = {}
 
 def before(cls):
     preprocessors.append(cls)
@@ -16,6 +17,12 @@ def document(document_type):
         if document_type not in document_processors:
             document_processors[document_type] = []
         document_processors[document_type].append(cls)
+        return cls
+    return decorator
+
+def resource(extension):
+    def decorator(cls):
+        resource_processors[extension] = cls
         return cls
     return decorator
 
