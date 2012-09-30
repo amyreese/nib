@@ -3,7 +3,7 @@ from os import path
 
 from hammer import Document, Resource
 from hammer.processor import preprocessors, postprocessors,\
-    document_processors, resource_processors
+    document_processors, resource_processors, template_processors
 import hammer.plugins
 
 class Build(object):
@@ -47,7 +47,7 @@ class Build(object):
             group_resources = resources_by_group[group]
 
             if group not in resource_processors:
-                group = None
+                group = ''
 
             if group in resource_processors:
                 p = resource_processors[group]
@@ -57,7 +57,7 @@ class Build(object):
             completed_resources = []
             chained_resources = []
             for resource in group_resources:
-                if group is None or resource.extension == group:
+                if group is '' or resource.extension == group:
                     completed_resources.append(resource)
                 else:
                     chained_resources.append(resource)
@@ -126,7 +126,7 @@ class Build(object):
             completed_documents = []
             chained_documents = []
             for document in group_documents:
-                if group is None or document.group == group:
+                if group is '' or document.group == group:
                     completed_documents.append(document)
                 else:
                     chained_documents.append(document)
@@ -147,7 +147,17 @@ class Build(object):
 
     def write_documents(self, documents):
         for document in documents:
+            extension = document.extension
+            if extension not in template_processors:
+                extension = ''
+
+            if extension in template_processors:
+                p = template_processors[extension]
+                print('Running template processor for {}: {}'.format(document.path, p))
+                document = p(self.options).process(document)
+
             filepath = path.join(self.output_path, document.path)
+            filepath += document.extension
 
             print('Writing document {}'.format(filepath))
             with open(filepath, 'w') as f:

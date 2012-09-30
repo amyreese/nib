@@ -4,9 +4,7 @@ from hammer import yaml
 class Document(dict):
     def __init__(self, path=None, group=None, content=None, **kwargs):
         dict.__init__(self, **kwargs)
-        self.path = path
-        self.uri = path
-        self.name, self.extension = os.path.splitext(self.path)
+        self.path, self.extension = os.path.splitext(path)
         self.group = group
         self.content = content
 
