@@ -1,3 +1,4 @@
+import os.path
 from hammer import yaml
 
 class Document(dict):
@@ -5,6 +6,7 @@ class Document(dict):
         dict.__init__(self, **kwargs)
         self.path = path
         self.uri = path
+        self.name, self.extension = os.path.splitext(self.path)
         self.group = group
         self.content = content
 

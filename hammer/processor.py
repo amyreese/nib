@@ -30,6 +30,8 @@ class Processor(object):
     def __init__(self, options):
         self.options = options
 
-    def process(self, documents):
-        return documents
+    def process_all(self, documents):
+        return [self.process(d) for d in documents]
 
+    def process(self, document):
+        return document

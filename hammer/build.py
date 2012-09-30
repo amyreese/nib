@@ -52,7 +52,7 @@ class Build(object):
             if group in resource_processors:
                 p = resource_processors[group]
                 print('Running resource processor {}'.format(p))
-                group_resources = p(self.options).process(group_resources)
+                group_resources = p(self.options).process_all(group_resources)
 
             completed_resources = []
             chained_resources = []
@@ -102,7 +102,7 @@ class Build(object):
         # preprocess all documents
         for p in preprocessors:
             print('Running pre-processor {}'.format(p))
-            documents = p(self.options).process(documents)
+            documents = p(self.options).process_all(documents)
 
         # break documents into groups by type
         documents_by_group = {}
@@ -121,7 +121,7 @@ class Build(object):
                 processors = document_processors[group]
                 for p in processors:
                     print('Running document processor {}'.format(p))
-                    group_documents = p(self.options).process(group_documents)
+                    group_documents = p(self.options).process_all(group_documents)
 
             completed_documents = []
             chained_documents = []
@@ -140,7 +140,7 @@ class Build(object):
         # postprocess all documents
         for p in postprocessors:
             print('Running post-processor {}'.format(p))
-            documents = p(self.options).process(documents)
+            documents = p(self.options).process_all(documents)
 
         return documents
 
