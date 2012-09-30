@@ -2,7 +2,7 @@ import markdown
 from hammer import Processor, markup
 
 @markup(['.md', '.mkdn'])
-class MarkdownURLPreprocessor(Processor):
+class MarkdownProcessor(Processor):
     def __init__(self, options):
         self.options = options
         self.markdown = markdown.Markdown(output_format='html5')
