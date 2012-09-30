@@ -12,11 +12,11 @@ def load(filename, supplement=False):
     with open(filename) as f:
         content = f.read()
 
-    documents = document_marker.split(content, 1)
+    documents = document_marker.split(content, 2)
     data = yaml.load(documents.pop(0), Loader=SafeLoader)
 
     if supplement:
-        return data, documents[0]
+        return data, documents
     else:
         return data
 
