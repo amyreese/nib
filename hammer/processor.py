@@ -47,7 +47,13 @@ class Processor(object):
         self.options = options
 
     def process_all(self, documents):
-        return [self.process(d) for d in documents]
+        new_documents = []
+        for document in documents:
+            result = self.process(document)
+            if result:
+                new_documents.append(document)
+
+        return new_documents
 
     def process(self, document):
         return document
