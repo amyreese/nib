@@ -4,6 +4,7 @@ from os import path
 from hammer import Document, Resource
 from hammer.processor import preprocessors, postprocessors,\
     document_processors, resource_processors
+import hammer.plugins
 
 class Build(object):
     def __init__(self, resource_path, document_path, output_path, options):
@@ -11,6 +12,8 @@ class Build(object):
         self.resource_path = resource_path
         self.output_path = output_path
         self.options = options
+
+        hammer.plugins.load(options)
 
     def load_resources(self):
         resources = []
