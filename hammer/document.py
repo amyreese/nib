@@ -14,9 +14,13 @@ class Document(dict):
                                                dict.__repr__(self))
 
     @classmethod
-    def from_file(cls, path):
+    def from_file(cls, path, defaults=None):
         metadata, sections = yaml.load(path, supplement=True)
         group = metadata.setdefault('type', None)
+
+        if isinstance(defaults, dict):
+            for key in defaults:
+                metadata.setdefault(key, defaults[key])
 
         content = sections.pop(0)
         short = None
@@ -30,4 +34,3 @@ class Document(dict):
                         short=short,
                         **metadata
                         )
-

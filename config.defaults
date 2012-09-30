@@ -1,5 +1,13 @@
+defaults:
+    template: page.html
+    title:
+
+site:
+    title: Some site
+
 document_path: input
 resource_path: static
+template_path: templates
 output_path: output
 resource_output_path_prefix: static
 

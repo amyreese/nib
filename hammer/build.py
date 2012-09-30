@@ -1,16 +1,16 @@
 import os
 from os import path
 
-from hammer import Document, Resource
+from hammer import Document, Resource, Render
 from hammer.processor import preprocessors, postprocessors,\
-    document_processors, resource_processors, template_processors
+    document_processors, resource_processors, markup_processors
 import hammer.plugins
 
 class Build(object):
-    def __init__(self, resource_path, document_path, output_path, options):
-        self.document_path = document_path
-        self.resource_path = resource_path
-        self.output_path = output_path
+    def __init__(self, options):
+        self.document_path = options['document_path']
+        self.resource_path = options['resource_path']
+        self.output_path = options['output_path']
         self.options = options
 
         hammer.plugins.load(options)
@@ -90,7 +90,8 @@ class Build(object):
 
                 try:
                     print('Reading document {}'.format(filepath))
-                    document = Document.from_file(filepath)
+                    document = Document.from_file(filepath,
+                                                  self.options['defaults'])
                     documents.append(document)
 
                 except Exception as e:
@@ -146,22 +147,24 @@ class Build(object):
 
 
     def write_documents(self, documents):
+        render = Render(self.options, documents)
+
         for document in documents:
             extension = document.extension
-            if extension not in template_processors:
+            if extension not in markup_processors:
                 extension = ''
 
-            if extension in template_processors:
-                p = template_processors[extension]
-                print('Running template processor for {}: {}'.format(document.path, p))
+            if extension in markup_processors:
+                p = markup_processors[extension]
+                print('Running markup processor for {}: {}'.format(document.path, p))
                 document = p(self.options).process(document)
 
             filepath = path.join(self.output_path, document.path)
             filepath += document.extension
 
-            print('Writing document {}'.format(filepath))
+            print('Rendering document {}'.format(filepath))
             with open(filepath, 'w') as f:
-                f.write(document.content)
+                f.write(render.render(document))
 
     def create_output_hierarchy(self, resources, documents):
         hierarchy = set()

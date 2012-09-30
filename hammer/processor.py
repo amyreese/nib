@@ -3,7 +3,7 @@ preprocessors = []
 postprocessors = []
 document_processors = {}
 resource_processors = {}
-template_processors = {}
+markup_processors = {}
 
 def resource(extensions):
     if type(extensions) != list:
@@ -31,13 +31,13 @@ def after(cls):
     postprocessors.append(cls)
     return cls
 
-def template(extensions):
+def markup(extensions):
     if type(extensions) != list:
         extensions = [extensions]
 
     def decorator(cls):
         for extension in extensions:
-            template_processors[extension] = cls
+            markup_processors[extension] = cls
     return decorator
 
 class Processor(object):

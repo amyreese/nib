@@ -1,7 +1,7 @@
 import markdown
-from hammer import Processor, template
+from hammer import Processor, markup
 
-@template(['.md', '.mkdn'])
+@markup(['.md', '.mkdn'])
 class MarkdownURLPreprocessor(Processor):
     def __init__(self, options):
         self.options = options

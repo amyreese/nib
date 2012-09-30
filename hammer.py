@@ -13,7 +13,4 @@ options = hammer.yaml.load(path.join(cwd, 'config.defaults'))
 if path.exists('config.local'):
     options.update(hammer.yaml.load('config.local'))
 
-hammer.Build(options['resource_path'],
-             options['document_path'],
-             options['output_path'],
-             options).run()
+hammer.Build(options).run()
