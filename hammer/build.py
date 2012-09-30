@@ -155,9 +155,10 @@ class Build(object):
                 extension = ''
 
             if extension in markup_processors:
-                p = markup_processors[extension]
-                print('Running markup processor for {}: {}'.format(document.path, p))
-                document = p(self.options).process(document)
+                processors = markup_processors[extension]
+                for p in processors:
+                    print('Running markup processor for {}: {}'.format(document.path, p))
+                    document = p(self.options).process(document)
 
             filepath = path.join(self.output_path, document.path)
             filepath += document.extension

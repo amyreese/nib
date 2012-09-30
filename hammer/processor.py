@@ -37,7 +37,9 @@ def markup(extensions):
 
     def decorator(cls):
         for extension in extensions:
-            markup_processors[extension] = cls
+            if extension not in markup_processors:
+                markup_processors[extension] = []
+            markup_processors[extension].append(cls)
     return decorator
 
 class Processor(object):
