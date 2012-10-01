@@ -1,4 +1,5 @@
 import hammer.yaml as yaml
+from hammer.config import Config
 from hammer.document import Document
 from hammer.resource import Resource
 from hammer.render import Render
