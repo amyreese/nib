@@ -1,5 +1,10 @@
 from distutils.core import setup
 
+from os import path
+import shutil
+if path.isfile('README.md'):
+    shutil.copyfile('README.md', 'README')
+
 setup(name='Nib',
       description='Static Site Generator',
       version='0.1',
