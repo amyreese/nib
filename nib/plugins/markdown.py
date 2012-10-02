@@ -1,5 +1,5 @@
 import markdown
-from hammer import Processor, markup
+from nib import Processor, markup
 
 @markup(['.md', '.mkdn'])
 class MarkdownProcessor(Processor):

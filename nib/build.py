@@ -1,10 +1,10 @@
 import os
 from os import path
 
-from hammer import Document, Resource, Render
-from hammer.processor import preprocessors, postprocessors,\
+from nib import Document, Resource, Render
+from nib.processor import preprocessors, postprocessors,\
     document_processors, resource_processors, markup_processors
-import hammer.plugins
+import nib.plugins
 
 class Build(object):
     def __init__(self, options):
@@ -13,7 +13,7 @@ class Build(object):
         self.output_path = options['output_path']
         self.options = options
 
-        hammer.plugins.load(options)
+        nib.plugins.load(options)
 
     def load_resources(self):
         resources = []

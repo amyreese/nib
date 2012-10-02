@@ -8,6 +8,6 @@ sys.path.insert(0, cwd)
 sys.path.insert(0, path.join(cwd, 'lib'))
 sys.path.insert(0, path.join(cwd, 'lib/sh'))
 
-import hammer
+import nib
 
-hammer.Build(hammer.Config()).run()
+nib.Build(nib.Config()).run()

@@ -1,5 +1,5 @@
 import os.path
-from hammer import yaml
+from nib import yaml
 
 class Document(dict):
     def __init__(self, path=None, group=None, content=None, short=None, **kwargs):

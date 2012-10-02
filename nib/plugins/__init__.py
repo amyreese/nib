@@ -17,4 +17,4 @@ def load(options):
                 continue
 
             if name in load_plugins or '*' in load_plugins:
-                importlib.import_module('hammer.plugins.' + name)
+                importlib.import_module('nib.plugins.' + name)

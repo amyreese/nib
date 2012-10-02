@@ -1,5 +1,5 @@
 import sh
-from hammer import Processor, resource
+from nib import Processor, resource
 
 @resource('.less')
 class LessCSSProcessor(Processor):
