@@ -147,8 +147,7 @@ class Build(object):
 
 
     def write_documents(self, documents):
-        render = Render(self.options, documents)
-
+        final_documents = []
         for document in documents:
             extension = document.extension
             if extension not in markup_processors:
@@ -160,6 +159,11 @@ class Build(object):
                     print('Running markup processor for {}: {}'.format(document.path, p))
                     document = p(self.options).process(document)
 
+            final_documents.append(document)
+
+        render = Render(self.options, final_documents)
+
+        for document in final_documents:
             filepath = path.join(self.output_path, document.path)
             filepath += document.extension
 
