@@ -1,4 +1,4 @@
-from distutils.core import setup
+from setuptools import setup
 
 from os import path
 import shutil
@@ -7,7 +7,7 @@ if path.isfile('README.md'):
 
 setup(name='Nib',
       description='Static Site Generator',
-      version='0.1',
+      version='0.2.4',
       author='John Reese',
       author_email='john@noswap.com',
       url='https://github.com/jreese/nib',
@@ -19,9 +19,14 @@ setup(name='Nib',
                    'Development Status :: 2 - Pre-Alpha',
                    ],
       license='MIT License',
+      install_requires=['sh>=1.0',
+                        'Jinja2>=2.6',
+                        'Markdown>=2.2.0',
+                        'PyYAML>=3.10',
+                        ],
       requires=['sh (>=1.0)',
                 'Jinja2 (>=2.6)',
-                'Marjkdown (>=2.2.0)',
+                'Markdown (>=2.2.0)',
                 'PyYAML (>=3.10)',
                 ],
       packages=['nib', 'nib.plugins'],
