@@ -138,15 +138,7 @@ class Build(object):
 
             documents.extend(completed_documents)
 
-        # postprocess all documents
-        for p in postprocessors:
-            print('Running post-processor {}'.format(p))
-            documents = p(self.options).process_all(documents)
-
-        return documents
-
-
-    def write_documents(self, documents):
+        # render markup for all documents
         final_documents = []
         for document in documents:
             extension = document.extension
@@ -161,9 +153,17 @@ class Build(object):
 
             final_documents.append(document)
 
-        render = Render(self.options, final_documents)
+        # postprocess all documents
+        for p in postprocessors:
+            print('Running post-processor {}'.format(p))
+            final_documents = p(self.options).process_all(final_documents)
 
-        for document in final_documents:
+        return final_documents
+
+    def write_documents(self, documents):
+        render = Render(self.options, documents)
+
+        for document in documents:
             filepath = path.join(self.output_path, document.path)
             filepath += document.extension
 
