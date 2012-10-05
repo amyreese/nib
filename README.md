@@ -42,7 +42,6 @@ License
 -------
 
 Nib is licensed under the MIT license.  See the `LICENSE` file for details.
-Libraries are licensed separately; see `lib/*/LICENSE*` files for details.
 
 
 Credits
