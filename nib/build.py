@@ -151,6 +151,9 @@ class Build(object):
                     print('Running markup processor for {}: {}'.format(document.path, p))
                     document = p(self.options).process(document)
 
+            if document.uri is None:
+                document.uri = document.path + document.extension
+
             final_documents.append(document)
 
         # postprocess all documents

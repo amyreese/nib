@@ -2,9 +2,10 @@ import os.path
 from nib import yaml
 
 class Document(dict):
-    def __init__(self, path=None, group=None, content=None, short=None, **kwargs):
+    def __init__(self, path=None, uri=None, group=None, content=None, short=None, **kwargs):
         dict.__init__(self, **kwargs)
         self.path, self.extension = os.path.splitext(path)
+        self.uri = uri
         self.group = group
         self.content = content
         self.short = short or content

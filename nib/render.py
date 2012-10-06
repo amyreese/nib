@@ -21,15 +21,19 @@ class Render(object):
             document.content = Template(document.content).render(**params)
 
     def render(self, document):
-        template = self.env.get_template(document['template'])
+        if 'template' in document:
+            template = self.env.get_template(document['template'])
 
-        params = {
-            'site': self.options['site'],
-            'documents': self.documents,
-            'document': document,
-            'content': document.content,
-            'short': document.short,
-        }
-        params.update(document)
+            params = {
+                'site': self.options['site'],
+                'documents': self.documents,
+                'document': document,
+                'content': document.content,
+                'short': document.short,
+            }
+            params.update(document)
 
-        return template.render(**params)
+            return template.render(**params)
+
+        else:
+            return document.content
