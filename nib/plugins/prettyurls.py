@@ -21,7 +21,6 @@ class PrettyURLProcessor(Processor):
     def process_all(self, documents):
         for document in documents:
             filename = path.basename(document.uri)
-            print(filename)
             if filename == 'index.html':
                 document.uri = path.dirname(document.path)
             elif document.extension == '.html':
