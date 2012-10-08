@@ -7,7 +7,7 @@ class Resource(object):
 
     @classmethod
     def from_file(cls, path):
-        with open(path) as f:
+        with open(path, 'rb') as f:
             content = f.read()
 
         return Resource(path=path,

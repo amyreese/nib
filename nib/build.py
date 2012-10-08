@@ -72,13 +72,11 @@ class Build(object):
 
     def write_resources(self, resources):
         for resource in resources:
-            filepath = path.join(self.output_path,
-                                 self.options['resource_output_path_prefix'],
-                                 resource.path)
+            filepath = path.join(self.output_path, resource.path)
             filepath += resource.extension
 
             print('Writing resource {}'.format(filepath))
-            with open(filepath, 'w') as f:
+            with open(filepath, 'wb') as f:
                 f.write(resource.content)
 
     def load_documents(self):
@@ -179,9 +177,7 @@ class Build(object):
 
         for resource in resources:
             dirname = path.dirname(resource.path)
-            hierarchy.add(path.join(self.output_path,
-                          self.options['resource_output_path_prefix'],
-                          dirname))
+            hierarchy.add(path.join(self.output_path, dirname))
 
         for document in documents:
             dirname = path.dirname(document.path)

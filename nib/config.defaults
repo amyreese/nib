@@ -6,10 +6,9 @@ site:
     title: Some site
 
 document_path: input
-resource_path: static
+resource_path: resources
 template_path: templates
 output_path: output
-resource_output_path_prefix: static
 
 load_plugins: ["*"]
 ignore_plugins: []
