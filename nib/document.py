@@ -24,9 +24,8 @@ class Document(dict):
                 metadata.setdefault(key, defaults[key])
 
         content = sections.pop(0)
-        short = None
+        short = content
         if len(sections):
-            short = content
             content += sections.pop(0)
 
         return Document(path=path,
