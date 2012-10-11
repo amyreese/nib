@@ -15,24 +15,74 @@ class Build(object):
 
         nib.plugins.load(options)
 
-    def load_resources(self):
-        resources = []
+    def load(self):
+        documents = []
 
-        for root, dirs, files in os.walk('.'):
+        for root, dirs, files in os.walk(self.document_path):
             for filename in files:
-                filepath = path.normpath(path.join(root, filename))
+                filepath = path.join(root, filename)
 
                 try:
-                    print('Reading resource {}'.format(filepath))
-                    resource = Resource.from_file(filepath)
+                    print('Reading {}'.format(filepath))
+                    document = Document.from_file(filepath, self.options)
+                    documents.append(document)
+
+                except Exception as e:
+                    print('Error while reading {}: {}'.format(filepath, e))
+
+        resources = []
+
+        for root, dirs, files in os.walk(self.resource_path):
+            for filename in files:
+                filepath = path.join(root, filename)
+
+                try:
+                    print('Reading {}'.format(filepath))
+                    resource = Resource.from_file(filepath, self.options)
                     resources.append(resource)
 
                 except Exception as e:
                     print('Error while reading {}: {}'.format(filepath, e))
 
-        return resources
+        return documents, resources
 
-    def process_resources(self, resources):
+    def process_documents(self, documents, resources):
+        # break documents into groups by type
+        documents_by_group = {}
+        for document in documents:
+            group = document.group
+            if group not in documents_by_group:
+                documents_by_group[group] = []
+            documents_by_group[group].append(document)
+
+        # process documents by group
+        documents = []
+        for group in documents_by_group:
+            group_documents = documents_by_group[group]
+
+            if group in document_processors:
+                processors = document_processors[group]
+                for p in processors:
+                    print('Running document processor {}'.format(p))
+                    group_documents, resources = p(self.options).process(group_documents, resources)
+
+            completed_documents = []
+            chained_documents = []
+            for document in group_documents:
+                if group is '' or document.group == group:
+                    completed_documents.append(document)
+                else:
+                    chained_documents.append(document)
+
+            if len(chained_documents):
+                chained_documents, resources = self.process_documents(chained_documents, resources)
+                documents.extend(chained_documents)
+
+            documents.extend(completed_documents)
+
+        return documents, resources
+
+    def process_resources(self, documents, resources):
         # break resources into groups by extension
         resources_by_group = {}
         for resource in resources:
@@ -52,7 +102,7 @@ class Build(object):
             if group in resource_processors:
                 p = resource_processors[group]
                 print('Running resource processor {}'.format(p))
-                group_resources = p(self.options).process_all(group_resources)
+                documents, group_resources = p(self.options).process(documents, group_resources)
 
             completed_resources = []
             chained_resources = []
@@ -63,83 +113,35 @@ class Build(object):
                     chained_resources.append(resource)
 
             if len(chained_resources):
-                chained_resources = self.process_resources(chained_resources)
+                documents, chained_resources = self.process(documents, chained_resources)
                 resources.extend(chained_resources)
 
             resources.extend(completed_resources)
 
-        return resources
+        return documents, resources
 
-    def write_resources(self, resources):
-        for resource in resources:
-            filepath = path.join(self.output_path, resource.path)
-            filepath += resource.extension
-
-            print('Writing resource {}'.format(filepath))
-            with open(filepath, 'wb') as f:
-                f.write(resource.content)
-
-    def load_documents(self):
-        documents = []
-
-        for root, dirs, files in os.walk('.'):
-            for filename in files:
-                filepath = path.normpath(path.join(root, filename))
-
-                try:
-                    print('Reading document {}'.format(filepath))
-                    document = Document.from_file(filepath,
-                                                  self.options['defaults'])
-                    documents.append(document)
-
-                except Exception as e:
-                    print('Error while reading {}: {}'.format(filepath, e))
-
-        return documents
-
-    def process_documents(self, documents):
-        # preprocess all documents
+    def process(self, documents, resources):
+        # preprocess everything
         for p in preprocessors:
             print('Running pre-processor {}'.format(p))
-            documents = p(self.options).process_all(documents)
+            documents, resources = p(self.options).process(documents, resources)
 
-        # break documents into groups by type
+        documents, resources = self.process_documents(documents, resources)
+        documents, resources = self.process_resources(documents, resources)
+
+        # break documents into groups by extension
         documents_by_group = {}
         for document in documents:
-            group = document.group
+            group = document.extension
             if group not in documents_by_group:
                 documents_by_group[group] = []
             documents_by_group[group].append(document)
 
-        # process documents by group
-        documents = []
-        for group in documents_by_group:
-            group_documents = documents_by_group[group]
-
-            if group in document_processors:
-                processors = document_processors[group]
-                for p in processors:
-                    print('Running document processor {}'.format(p))
-                    group_documents = p(self.options).process_all(group_documents)
-
-            completed_documents = []
-            chained_documents = []
-            for document in group_documents:
-                if group is '' or document.group == group:
-                    completed_documents.append(document)
-                else:
-                    chained_documents.append(document)
-
-            if len(chained_documents):
-                chained_documents = self.process_documents(chained_documents)
-                documents.extend(chained_documents)
-
-            documents.extend(completed_documents)
-
         # render markup for all documents
-        final_documents = []
-        for document in documents:
-            extension = document.extension
+        documents = []
+        for extension in documents_by_group:
+            group_documents = documents_by_group[extension]
+
             if extension not in markup_processors:
                 extension = ''
 
@@ -147,21 +149,23 @@ class Build(object):
                 processors = markup_processors[extension]
                 for p in processors:
                     print('Running markup processor for {}: {}'.format(document.path, p))
-                    document = p(self.options).process(document)
+                    group_documents, resources = p(self.options).process(group_documents, resources)
 
+            documents.extend(group_documents)
+
+        # set default document uris
+        for document in documents:
             if document.uri is None:
                 document.uri = document.path + document.extension
 
-            final_documents.append(document)
-
-        # postprocess all documents
+        # postprocess everything
         for p in postprocessors:
             print('Running post-processor {}'.format(p))
-            final_documents = p(self.options).process_all(final_documents)
+            documents, resources = p(self.options).process(documents, resources)
 
-        return final_documents
+        return documents, resources
 
-    def write_documents(self, documents):
+    def write(self, documents, resources):
         render = Render(self.options, documents)
 
         for document in documents:
@@ -172,15 +176,23 @@ class Build(object):
             with open(filepath, 'w') as f:
                 f.write(render.render(document))
 
-    def create_output_hierarchy(self, resources, documents):
-        hierarchy = set()
-
         for resource in resources:
-            dirname = path.dirname(resource.path)
-            hierarchy.add(path.join(self.output_path, dirname))
+            filepath = path.join(self.output_path, resource.path)
+            filepath += resource.extension
+
+            print('Writing resource {}'.format(filepath))
+            with open(filepath, 'wb') as f:
+                f.write(resource.content)
+
+    def create_output_hierarchy(self, documents, resources):
+        hierarchy = set()
 
         for document in documents:
             dirname = path.dirname(document.path)
+            hierarchy.add(path.join(self.output_path, dirname))
+
+        for resource in resources:
+            dirname = path.dirname(resource.path)
             hierarchy.add(path.join(self.output_path, dirname))
 
         print('Creating output hierarchy: {}'.format(hierarchy))
@@ -189,18 +201,8 @@ class Build(object):
             os.makedirs(dir, exist_ok=True)
 
     def run(self):
-        cwd = os.getcwd()
-        os.chdir(self.resource_path)
-        resources = self.load_resources()
-        resources = self.process_resources(resources)
-        os.chdir(cwd)
+        documents, resources = self.load()
+        documents, resources = self.process(documents, resources)
 
-        cwd = os.getcwd()
-        os.chdir(self.document_path)
-        documents = self.load_documents()
-        documents = self.process_documents(documents)
-        os.chdir(cwd)
-
-        self.create_output_hierarchy(resources, documents)
-        self.write_resources(resources)
-        self.write_documents(documents)
+        self.create_output_hierarchy(documents, resources)
+        self.write(documents, resources)

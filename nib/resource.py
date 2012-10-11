@@ -6,9 +6,12 @@ class Resource(object):
         self.content = content
 
     @classmethod
-    def from_file(cls, path):
+    def from_file(cls, path, options=None):
         with open(path, 'rb') as f:
             content = f.read()
+
+        if options:
+            path = os.path.relpath(path, options['resource_path'])
 
         return Resource(path=path,
                         content=content,

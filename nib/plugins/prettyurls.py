@@ -1,11 +1,8 @@
 from os import path
 
-from nib import Document, Processor, after
+from nib import Resource, Processor, after
 
-apache_redirects = """\
-RewriteEngine on
-RewriteBase /
-
+apache_redirects = b"""\
 RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
 RewriteRule ^(.*)$ /$1/index.html [L]
 
@@ -16,9 +13,14 @@ RewriteCond %{DOCUMENT_ROOT}/$1.html -f
 RewriteRule ^(.*)/$ /$1 [R]
 """
 
+apache_redirects_base = b"""\
+RewriteEngine on
+RewriteBase /
+"""
+
 @after
 class PrettyURLProcessor(Processor):
-    def process_all(self, documents):
+    def process(self, documents, resources):
         for document in documents:
             filename = path.basename(document.uri)
             if filename == 'index.html':
@@ -26,11 +28,18 @@ class PrettyURLProcessor(Processor):
             elif document.extension == '.html':
                 document.uri = document.path
 
-        htaccess = Document(path='.htaccess',
-                            uri='.htaccess',
-                            content=apache_redirects)
-        if 'apache_htaccess_rules' in self.options:
-            document.content += self.aptions['apache_htaccess_rules']
-        documents.append(htaccess)
+        htaccess = None
+        for resource in resources:
+            print(resource.path)
+            if resource.path == '.htaccess':
+                htaccess = resource
 
-        return documents
+        if not htaccess:
+            print('New .htaccess')
+            htaccess = Resource(path='.htaccess',
+                                content=apache_redirects_base)
+            resources.append(htaccess)
+
+        htaccess.content += apache_redirects
+
+        return documents, resources

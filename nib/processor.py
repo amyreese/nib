@@ -46,14 +46,23 @@ class Processor(object):
     def __init__(self, options):
         self.options = options
 
-    def process_all(self, documents):
+    def process(self, documents, resources):
         new_documents = []
         for document in documents:
-            result = self.process(document)
+            result = self.document(document)
             if result:
                 new_documents.append(document)
 
-        return new_documents
+        new_resources = []
+        for resource in resources:
+            result = self.resource(resource)
+            if result:
+                new_resources.append(resource)
 
-    def process(self, document):
+        return new_documents, new_resources
+
+    def document(self, document):
         return document
+
+    def resource(self, resource):
+        return resource

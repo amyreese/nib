@@ -15,11 +15,13 @@ class Document(dict):
                                                dict.__repr__(self))
 
     @classmethod
-    def from_file(cls, path, defaults=None):
+    def from_file(cls, path, options=None):
         metadata, sections = yaml.load(path, supplement=True)
         group = metadata.setdefault('type', None)
 
-        if isinstance(defaults, dict):
+        if options:
+            path = os.path.relpath(path, options['document_path'])
+            defaults = options['defaults']
             for key in defaults:
                 metadata.setdefault(key, defaults[key])
 
