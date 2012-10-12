@@ -2,7 +2,7 @@ from os import path
 
 from nib import Resource, Processor, after
 
-apache_redirects = b"""\
+apache_redirects = b"""
 RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
 RewriteRule ^(.*)$ /$1/index.html [L]
 
@@ -13,7 +13,7 @@ RewriteCond %{DOCUMENT_ROOT}/$1.html -f
 RewriteRule ^(.*)/$ /$1 [R]
 """
 
-apache_redirects_base = b"""\
+apache_redirects_base = b"""
 RewriteEngine on
 RewriteBase /
 """
@@ -30,12 +30,10 @@ class PrettyURLProcessor(Processor):
 
         htaccess = None
         for resource in resources:
-            print(resource.path)
             if resource.path == '.htaccess':
                 htaccess = resource
 
         if not htaccess:
-            print('New .htaccess')
             htaccess = Resource(path='.htaccess',
                                 content=apache_redirects_base)
             resources.append(htaccess)

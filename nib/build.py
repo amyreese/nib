@@ -113,7 +113,7 @@ class Build(object):
                     chained_resources.append(resource)
 
             if len(chained_resources):
-                documents, chained_resources = self.process(documents, chained_resources)
+                documents, chained_resources = self.process_resources(documents, chained_resources)
                 resources.extend(chained_resources)
 
             resources.extend(completed_resources)
