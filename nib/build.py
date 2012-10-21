@@ -163,6 +163,11 @@ class Build(object):
             print('Running post-processor {}'.format(p))
             documents, resources = p(self.options).process(documents, resources)
 
+        # finalize document uris
+        for document in documents:
+            document.uri = path.join(self.options['site']['root'], document.uri)
+            print(document.uri)
+
         return documents, resources
 
     def write(self, documents, resources):

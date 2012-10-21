@@ -17,7 +17,7 @@ class Document(dict):
     @classmethod
     def from_file(cls, path, options=None):
         metadata, sections = yaml.load(path, supplement=True)
-        group = metadata.setdefault('type', None)
+        group = metadata.setdefault('group', None)
 
         if options:
             path = os.path.relpath(path, options['document_path'])
@@ -31,7 +31,6 @@ class Document(dict):
             content += sections.pop(0)
 
         return Document(path=path,
-                        group=group,
                         content=content,
                         short=short,
                         **metadata

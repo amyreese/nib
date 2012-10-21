@@ -4,6 +4,7 @@ defaults:
 
 site:
     title: Some site
+    root: /
 
 document_path: input
 resource_path: resources
@@ -12,3 +13,22 @@ output_path: output
 
 load_plugins: ["*"]
 ignore_plugins: []
+
+blog:
+    uris:
+        feed: "feed.xml"
+        index: "index.html"
+        tags: "tags/index.html"
+        tag: "tags/{tag}.html"
+        archive: "archive.html"
+        yearly: "{year}/index.html"
+        monthly: "{year}/{month}/index.html"
+        daily: "{year}/{month}/{day}.html"
+    templates:
+        index: "posts.html"
+        tags: "list.html"
+        tag: "posts.html"
+        archive: "list.html"
+        yearly: "posts.html"
+        monthly: "posts.html"
+        daily: "posts.html"

@@ -8,12 +8,12 @@ class Render(object):
         self.documents = documents
         self.loader = FileSystemLoader(path.abspath(options['template_path']))
         self.env = Environment(loader=self.loader)
+        self.site = dict(options['site'], documents=documents)
 
         for document in documents:
             params = {
-                'site': self.options['site'],
-                'documents': self.documents,
-                'document': document,
+                'site': self.site,
+                'page': document,
             }
             params.update(document)
 
@@ -26,8 +26,7 @@ class Render(object):
 
             params = {
                 'site': self.options['site'],
-                'documents': self.documents,
-                'document': document,
+                'page': document,
                 'content': document.content,
                 'short': document.short,
             }
