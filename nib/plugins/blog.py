@@ -41,6 +41,7 @@ class BlogDocumentProcessor(Processor):
 
             return page
 
+        feed_page = blog_page('feed')
         index_page = blog_page('index')
         archive_page = blog_page('archive')
         tags_page = blog_page('tags')
@@ -63,6 +64,7 @@ class BlogDocumentProcessor(Processor):
                 for tag in tags:
                     blog_page('tag', parent=tags_page, child=document, tag=tag)
 
+            feed_page['pages'].append(document)
             index_page['pages'].append(document)
 
         documents.extend(blog_pages.values())
