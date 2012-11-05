@@ -1,6 +1,7 @@
 import jinja2
 from jinja2 import Environment, FileSystemLoader, Template
 from os import path
+import time
 
 jinja_filters = {}
 
@@ -21,9 +22,11 @@ class Render(object):
             self.env.filters[name] = jinja_filters[name]
 
         self.site = dict(options['site'], documents=documents)
+        self.now = time.time()
 
         for document in documents:
             params = {
+                'now': self.now,
                 'site': self.site,
                 'page': document,
             }
@@ -37,6 +40,7 @@ class Render(object):
             template = self.env.get_template(document['template'])
 
             params = {
+                'now': self.now,
                 'site': self.options['site'],
                 'page': document,
                 'content': document.content,
