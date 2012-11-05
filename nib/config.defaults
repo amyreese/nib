@@ -1,9 +1,13 @@
 defaults:
     template: page.html
     title:
+	description:
+	link:
 
 site:
     title: Some site
+    description: A statically generated site
+    uri: http://example.com
     root: /
 
 document_path: input
