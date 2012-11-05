@@ -2,12 +2,24 @@ import jinja2
 from jinja2 import Environment, FileSystemLoader, Template
 from os import path
 
+jinja_filters = {}
+
+def jinja(name):
+    def decorator(f):
+        jinja_filters[name] = f
+        return f
+    return decorator
+
 class Render(object):
     def __init__(self, options, documents):
         self.options = options
         self.documents = documents
+
         self.loader = FileSystemLoader(path.abspath(options['template_path']))
         self.env = Environment(loader=self.loader)
+        for name in jinja_filters:
+            self.env.filters[name] = jinja_filters[name]
+
         self.site = dict(options['site'], documents=documents)
 
         for document in documents:
