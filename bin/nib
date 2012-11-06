@@ -8,9 +8,14 @@ import nib
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Get more information at http://github.com/jreese/nib')
-    parser.add_argument('--version',
+    parser.add_argument('-V', '--version',
                         action='version',
                         version='%(prog)s ' + nib.version)
+    parser.add_argument('-d', '--debug',
+                        dest='debug',
+                        action='store_true',
+                        default=False,
+                        help='debug output')
     parser.add_argument('-c', '--config',
                         dest='config',
                         metavar='FILE',
@@ -23,6 +28,10 @@ if __name__ == '__main__':
     try:
         nib.Build(nib.Config(options.config)).run()
         print('Done')
+
     except Exception as e:
+        if (options.debug):
+            raise
+
         sys.stderr.write('Error: {}\n'.format(e))
         sys.exit(1)
