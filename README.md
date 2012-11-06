@@ -38,6 +38,18 @@ Requirements
 - Python 3
 
 
+Installation
+------------
+
+To install the latest official release:
+
+    $ pip3 install nib
+
+or to install the version currently checked out from source:
+
+    $ python3 setup.py install
+
+
 License
 -------
 
