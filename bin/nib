@@ -1,8 +1,28 @@
 #!/usr/bin/env python3
+import argparse
 import os
 from os import path
 import sys
 
 import nib
 
-nib.Build(nib.Config()).run()
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Get more information at http://github.com/jreese/nib')
+    parser.add_argument('--version',
+                        action='version',
+                        version='%(prog)s ' + nib.version)
+    parser.add_argument('-c', '--config',
+                        dest='config',
+                        metavar='FILE',
+                        action='store',
+                        default=None,
+                        help='site configuration file (default is config.nib)')
+
+    options = parser.parse_args()
+
+    try:
+        nib.Build(nib.Config(options.config)).run()
+        print('Done')
+    except Exception as e:
+        sys.stderr.write('Error: {}\n'.format(e))
+        sys.exit(1)
