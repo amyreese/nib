@@ -5,9 +5,11 @@ import shutil
 if path.isfile('README.md'):
     shutil.copyfile('README.md', 'README')
 
+import nib
+
 setup(name='Nib',
       description='Static Site Generator',
-      version='0.3.0',
+      version=nib.version,
       author='John Reese',
       author_email='john@noswap.com',
       url='https://github.com/jreese/nib',

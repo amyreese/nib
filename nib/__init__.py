@@ -1,3 +1,5 @@
+version = '0.3.1'
+
 import nib.yaml as yaml
 from nib.config import Config
 from nib.document import Document
