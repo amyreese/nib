@@ -3,11 +3,6 @@ import os
 from os import path
 import sys
 
-cwd = os.getcwd()
-sys.path.insert(0, cwd)
-sys.path.insert(0, path.join(cwd, 'lib'))
-sys.path.insert(0, path.join(cwd, 'lib/sh'))
-
 import nib
 
 nib.Build(nib.Config()).run()
