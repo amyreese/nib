@@ -13,10 +13,10 @@ site:
     copyright:
     author:
 
-document_path: input
+document_path: documents
 resource_path: resources
 template_path: templates
-output_path: output
+output_path: site
 
 load_plugins: ["*"]
 ignore_plugins: []
