@@ -1,4 +1,4 @@
-version = '0.3.1'
+version = '0.3.2'
 
 import nib.yaml as yaml
 from nib.config import Config
