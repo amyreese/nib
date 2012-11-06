@@ -9,6 +9,9 @@ RewriteRule ^(.*)$ /$1/index.html [L]
 RewriteCond %{DOCUMENT_ROOT}/$1.html -f
 RewriteRule ^(.*)$ /$1.html [L]
 
+RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
+RewriteRule ^(.*)/$ /$1 [R]
+
 RewriteCond %{DOCUMENT_ROOT}/$1.html -f
 RewriteRule ^(.*)/$ /$1 [R]
 """
