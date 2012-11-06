@@ -1,5 +1,6 @@
 import os
 from os import path
+from urllib.parse import urljoin
 
 from nib import Document, Resource, Render
 from nib.processor import preprocessors, postprocessors,\
@@ -165,9 +166,9 @@ class Build(object):
 
         # finalize document uris
         for document in documents:
-            document.uri = path.join(self.options['site']['root'], document.uri)
-            if not document['link']:
-                document['link'] = path.join(self.options['site']['uri'], document.uri)
+            document.uri = urljoin(self.options['site']['root'], document.uri)
+            if not document.get('link'):
+                document['link'] = urljoin(self.options['site']['uri'], document.uri)
 
         return documents, resources
 
