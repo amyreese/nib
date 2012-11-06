@@ -29,6 +29,7 @@ class BlogDocumentProcessor(Processor):
                                 short='',
                                 template=templates[name],
                                 pages=[],
+                                **kwargs
                                 )
                 if parent:
                     parent['pages'].append(page)
@@ -43,26 +44,30 @@ class BlogDocumentProcessor(Processor):
 
         feed_page = blog_page('feed')
         index_page = blog_page('index')
-        archive_page = blog_page('archive')
-        tags_page = blog_page('tags')
+        archive_page = blog_page('archive', title='Archive')
+        tags_page = blog_page('tags', title='Tags')
 
         for document in documents:
             if type(document['date']) == datetime.date:
                 date = document['date']
-                date = {
+                kwargs = {
                     'year': date.year,
                     'month': date.month,
                     'day': date.day,
                 }
 
-                blog_page('yearly', parent=archive_page, child=document, **date)
-                blog_page('monthly', parent=archive_page, child=document, **date)
-                blog_page('daily', parent=archive_page, child=document, **date)
+                blog_page('yearly', parent=archive_page, child=document,
+                          title=date.strftime('%Y'), **kwargs)
+                blog_page('monthly', parent=archive_page, child=document,
+                          title=date.strftime('%B %Y'), **kwargs)
+                blog_page('daily', parent=archive_page, child=document,
+                          title=date.strftime('%B %d, %Y'), **kwargs)
 
             if 'tags' in document:
                 tags = [token.strip() for token in document['tags'].split(',')]
                 for tag in tags:
-                    blog_page('tag', parent=tags_page, child=document, tag=tag)
+                    blog_page('tag', parent=tags_page, child=document,
+                              title=tag, tag=tag)
 
             feed_page['pages'].append(document)
             index_page['pages'].append(document)
