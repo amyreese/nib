@@ -15,6 +15,10 @@ def timeformat(t=None, f='%Y-%m-%d %I:%M %p'):
     s = time.strftime(f, t)
     return s
 
+@jinja('atomtime')
+def atomtimeformat(t=None, f='%Y-%m-%dT%I:%M:%SZ'):
+    return timeformat(t,f)
+
 @jinja('rsstime')
 def rsstimeformat(t=None, f='%a, %d %b %Y %I:%M:%S GMT'):
     return timeformat(t,f)

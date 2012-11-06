@@ -1,14 +1,17 @@
 defaults:
     template: page.html
     title:
-	description:
-	link:
+    description:
+    link:
+    author:
 
 site:
     title: Some site
     description: A statically generated site
     uri: http://example.com
     root: /
+    copyright:
+    author:
 
 document_path: input
 resource_path: resources
