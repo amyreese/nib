@@ -17,7 +17,7 @@ def merge(dest, source):
 class Config(dict):
     def __init__(self, filename=None):
         cwd = path.abspath(path.dirname(__file__))
-        values = nib.yaml.load(path.join(cwd, 'config.defaults'))
+        values = nib.yaml.load(path.join(cwd, 'defaults.nib'))
 
         if filename is None and path.isfile('config.nib'):
             filename = 'config.nib'

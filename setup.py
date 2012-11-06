@@ -32,6 +32,6 @@ setup(name='Nib',
                 'PyYAML (>=3.10)',
                 ],
       packages=['nib', 'nib.plugins'],
-      package_data={'nib': ['config.defaults']},
+      package_data={'nib': ['defaults.nib']},
       scripts=['bin/nib'],
       )
