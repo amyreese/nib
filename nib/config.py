@@ -1,6 +1,10 @@
 from os import path
+import sys
 
 import nib
+
+cwd = path.abspath(path.dirname(__file__))
+default_config = path.join(cwd, 'defaults.nib')
 
 def merge(dest, source):
     """In-place, recursive merge of two dictionaries."""
@@ -16,14 +20,13 @@ def merge(dest, source):
 
 class Config(dict):
     def __init__(self, filename=None):
-        cwd = path.abspath(path.dirname(__file__))
-        values = nib.yaml.load(path.join(cwd, 'defaults.nib'))
-
-        if filename is None and path.isfile('config.nib'):
-            filename = 'config.nib'
+        values = nib.yaml.load(default_config)
 
         if filename is not None:
-            overrides = nib.yaml.load(filename)
-            merge(values, overrides)
+            if path.isfile(filename):
+                overrides = nib.yaml.load(filename)
+                merge(values, overrides)
+            else:
+                sys.stderr.write('Warning: no site config found at "{}"\n'.format(filename))
 
         dict.__init__(self, values)

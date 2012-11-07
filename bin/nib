@@ -2,9 +2,11 @@
 import argparse
 import os
 from os import path
+import shutil
 import sys
 
 import nib
+from nib.config import default_config
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Get more information at http://github.com/jreese/nib')
@@ -23,7 +25,7 @@ if __name__ == '__main__':
                         dest='config',
                         metavar='FILE',
                         action='store',
-                        default=None,
+                        default='config.nib',
                         help='site configuration file (default is config.nib)')
 
     build = subparsers.add_parser('build',
@@ -51,7 +53,15 @@ if __name__ == '__main__':
             print('Done')
 
         elif options.action == 'config':
-            print('Soon...')
+            if path.exists(options.config):
+                if not options.force:
+                    sys.stderr.write('Warning: "{}" already exists, use --force to overwrite\n'.format(options.config))
+                    sys.exit(1)
+
+                os.unlink(options.config)
+
+            shutil.copyfile(default_config, options.config)
+            print('Done')
 
         elif options.action == 'help':
             if options.command is None:
