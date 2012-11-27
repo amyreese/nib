@@ -65,9 +65,11 @@ class BlogDocumentProcessor(Processor):
 
             if 'tags' in document:
                 tags = [token.strip() for token in document['tags'].split(',')]
+                document['tags'] = {}
                 for tag in tags:
-                    blog_page('tag', parent=tags_page, child=document,
-                              title=tag, tag=tag)
+                    tag_page = blog_page('tag', parent=tags_page, child=document,
+                                         title=tag, tag=tag)
+                    document['tags'][tag] = tag_page
 
             feed_page['pages'].append(document)
             index_page['pages'].append(document)
