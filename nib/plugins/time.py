@@ -27,3 +27,7 @@ def rsstimeformat(t=None, f='%a, %d %b %Y %I:%M:%S GMT'):
 def dateformat(t=None, f='%Y-%m-%d'):
     return timeformat(t,f)
 
+@jinja('longdate')
+def longdateformat(t=None, f='%B %d, %Y'):
+    return timeformat(t, f)
+
