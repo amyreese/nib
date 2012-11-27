@@ -149,7 +149,7 @@ class Build(object):
             if extension in markup_processors:
                 processors = markup_processors[extension]
                 for p in processors:
-                    print('Running markup processor for {}: {}'.format(document.path, p))
+                    print('Running markup processor {}'.format(p))
                     group_documents, resources = p(self.options).process(group_documents, resources)
 
             documents.extend(group_documents)
@@ -168,7 +168,7 @@ class Build(object):
         for document in documents:
             document.uri = urljoin(self.options['site']['root'], document.uri)
             if not document.get('link'):
-                document['link'] = urljoin(self.options['site']['uri'], document.uri)
+                document['link'] = document.uri
 
         return documents, resources
 
