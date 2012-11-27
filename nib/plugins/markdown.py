@@ -8,6 +8,7 @@ class MarkdownProcessor(Processor):
         self.markdown = markdown.Markdown(output_format='html5')
 
     def document(self, document):
+        document.short = self.markdown.convert(document.short)
         document.content = self.markdown.convert(document.content)
         document.extension = '.html'
         return document
