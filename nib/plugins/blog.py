@@ -48,6 +48,8 @@ class BlogDocumentProcessor(Processor):
         tags_page = blog_page('tags', title='Tags')
 
         for document in documents:
+            document['template'] = templates['post']
+
             if type(document['date']) == datetime.date:
                 date = document['date']
                 kwargs = {

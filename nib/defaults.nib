@@ -32,6 +32,7 @@ blog:
         monthly: "{year}/{month}/index.html"
         daily: "{year}/{month}/{day}.html"
     templates:
+        post: "post.html"
         feed: "feed.xml"
         index: "posts.html"
         tags: "list.html"
