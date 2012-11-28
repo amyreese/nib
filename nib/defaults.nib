@@ -7,7 +7,7 @@ defaults:
 
 site:
     title: Some site
-    description: A statically generated site
+    tagline: A statically generated site
     uri: http://example.com
     root: /
     copyright:
