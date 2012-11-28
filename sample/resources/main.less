@@ -1,9 +1,11 @@
+@import url("http://fonts.googleapis.com/css?family=Droid+Sans+Mono|Droid+Serif:400,700|Open+Sans:400italic,600italic,400,600");
+
 @gutter: 30px;
 
-@logo-font: Georgia, serif;
-@header-font: serif;
-@text-font: sans-serif;
-@code-font: monospace;
+@logo-font: "Droid Serif", serif;
+@header-font: "Droid Serif", serif;
+@text-font: "Open Sans", sans-serif;
+@code-font: "Droid Sans Mono", monospace;
 
 @background-color: #fcfcfc;
 @border-color: #e0e0e0;
@@ -43,6 +45,11 @@ h1, h2, h3, h4, h5, h6 {
 
 code {
 	font-family: @code-font;
+	letter-spacing: -1px;
+}
+
+pre code {
+	letter-spacing: 0px;
 }
 
 a {
@@ -101,12 +108,12 @@ a:hover {
 		padding-left: @gutter;
 		border-bottom: 1px solid @border-color;
 		font-family: @header-font;
-		font-size: 18px;
+		font-size: 16px;
 		font-weight: bold;
 
 		li {
 			display: inline-block;
-			margin: 4px @gutter 4px 0;
+			margin: 6px @gutter 4px 0;
 
 			a {
 				color: @logo-color;
