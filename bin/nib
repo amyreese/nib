@@ -6,7 +6,7 @@ import shutil
 import sys
 
 import nib
-from nib.config import default_config
+from nib.config import Config, default_config
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Get more information at http://github.com/jreese/nib')
@@ -39,6 +39,9 @@ if __name__ == '__main__':
                         default=False,
                         help='overwrite existing configuration files')
 
+    wizard = subparsers.add_parser('wizard',
+                                   help='interactively generate new site')
+
     help = subparsers.add_parser('help',
                                  help='show help message for a given command')
     help.add_argument('command',
@@ -62,6 +65,77 @@ if __name__ == '__main__':
 
             shutil.copyfile(default_config, options.config)
             print('Done')
+
+        elif options.action == 'wizard':
+            empty = True
+            for dirpath, dirs, files in os.walk('.'):
+                if len(dirs) > 0 or len(files) > 0:
+                    empty = False
+                    break
+
+            overwrite = input('This directory is not empty, the wizard will overwrite existing files. Proceed? [y/N]: ')
+            if not overwrite.lower().startswith('y'):
+                sys.exit(1)
+
+            config = Config()
+
+            print()
+            print('-- Nib Wizard --')
+
+            print()
+            custom_config = input('Customize the default config? [Y/n]: ')
+            if not custom_config.lower().startswith('n'):
+
+                print()
+                print('- Site Options -')
+                print()
+
+                site = config['site']
+
+                site_title = input('Site title [{}]: '.format(site['title']))
+                if site_title:
+                    site['title'] = site_title
+
+                site_tagline = input('Site tagline [{}]: '.format(site['tagline']))
+                if site_tagline:
+                    site['tagline'] = site_tagline
+
+                site_uri = input('Site uri [{}]: '.format(site['uri']))
+                if site_uri:
+                    site['uri'] = site_uri
+
+                site_root = input('Site root [{}]: '.format(site['root']))
+                if site_root:
+                    site['root'] = site_root
+
+                site_author = input('Site author [{}]: '.format(site['author']))
+                if site_author:
+                    site['author'] = site_author
+                    config['defaults']['author'] = site_author
+
+                site_copyright = input('Site copyright [{}]: '.format(site['copyright']))
+                if site_copyright:
+                    site['copyright'] = site_copyright
+
+                print()
+                print('- Plugin Options -')
+                print()
+
+                enable_prettyurls = input('Enable pretty URLs? Uses Apache .htaccess [y/N]: ')
+                if enable_prettyurls.lower().startswith('y'):
+                    config['ignore_plugins'].remove('prettyurls')
+
+                print()
+                print('- Template Options -')
+                print()
+
+            copy_sample = input('Copy sample site templates? [Y/n]: ')
+            if not copy_sample.lower().startswith('n'):
+                shutil.unpack_archive(path.join(nib.cwd, 'sample.zip'), format='zip')
+
+            nib.yaml.save('config.nib', config)
+            print()
+            print('Wizard complete.  Run `nib build` to generate site.')
 
         elif options.action == 'help':
             if options.command is None:
