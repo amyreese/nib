@@ -1,5 +1,8 @@
 version = '0.3.5'
 
+from os import path
+cwd = path.abspath(path.dirname(__file__))
+
 import nib.yaml as yaml
 from nib.config import Config
 from nib.document import Document

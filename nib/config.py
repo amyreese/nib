@@ -3,8 +3,7 @@ import sys
 
 import nib
 
-cwd = path.abspath(path.dirname(__file__))
-default_config = path.join(cwd, 'defaults.nib')
+default_config = path.join(nib.cwd, 'defaults.nib')
 
 def merge(dest, source):
     """In-place, recursive merge of two dictionaries."""
