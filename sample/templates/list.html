@@ -1,0 +1,8 @@
+{% extends "page.html" %}
+{% block content %}
+<ul>
+{% for p in pages | sort(attribute='title') %}
+<li><a href="{{ p.uri }}">{{ p.title }}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}

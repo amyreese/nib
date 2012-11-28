@@ -1,0 +1,26 @@
+{%- macro post(page, short=False) %}
+<div class="post">
+	<h2 class="title"><a href="{{ page.link }}">{{ page.title }}</a>{% if page.link != page.uri %} <span class="muted">&rarr;</span>{% endif %}</h2>
+	<div class="metadata">
+		<span class="timestamp">Posted on {{ page.date | longdate }}</span>
+		<span class="permalink"><a href="{{ page.uri }}">&raquo;</a></span>
+		<span class="tags">Tagged as 
+		{%- for tag in page.tags %}
+			<a class="tag" href="{{ page.tags[tag].uri }}">{{ tag }}</a>
+		{%- endfor %}
+		</span>
+	</div>
+	{%- if short %}
+	<div class="short">
+		{{ page.short }}
+	</div>
+	{%- else %}
+	<div class="content">
+		{{ page.content }}
+	</div>
+	{%- endif %}
+	{%- if short and page.short != page.content %}
+	<a class="more" href="{{ page.uri }}">Continue Reading &raquo;</a>
+	{%- endif %}
+</div>
+{%- endmacro %}

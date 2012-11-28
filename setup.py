@@ -1,9 +1,17 @@
 from setuptools import setup
 
+import os
 from os import path
 import shutil
+
 if path.isfile('README.md'):
     shutil.copyfile('README.md', 'README')
+
+if path.exists('sample/site'):
+    shutil.rmtree('sample/site')
+if path.exists('sample/config.nib'):
+    os.unlink('sample/config.nib')
+shutil.make_archive('nib/sample', 'zip', 'sample')
 
 import nib
 
@@ -32,6 +40,6 @@ setup(name='Nib',
                 'PyYAML (>=3.10)',
                 ],
       packages=['nib', 'nib.plugins'],
-      package_data={'nib': ['defaults.nib']},
+      package_data={'nib': ['defaults.nib', 'sample.zip']},
       scripts=['bin/nib'],
       )

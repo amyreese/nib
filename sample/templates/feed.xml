@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<id>{{ site.uri }}{{ page.uri }}</id>
+	<link href="{{ site.uri }}"/>
+	<title>{{ site.title }}</title>
+	<subtitle>{{ site.description }}</subtitle>
+{%- if site.author %}
+	<author>
+		<name>{{ site.author }}</name>
+	</author>
+{%- endif %}
+{%- if site.copyright %}
+	<rights>{{ site.copyright }}</rights>
+{%- endif %}
+	<updated>{{ now | atomtime }}</updated>
+	<generator uri="http://github.com/jreese/nib">Nib</generator>
+{%- for page in pages | sort(reverse=True, attribute='date') %}
+	<entry>
+		<id>{{ site.uri }}{{ page.uri }}</id>
+		<link href="{{ page.link }}"/>
+		<title>{{ page.title }}</title>
+		<updated>{{ page.date | atomtime }}</updated>
+		<published>{{ page.date | atomtime }}</published>
+{%- if page.author %}
+		<author>
+			<name>{{ page.author }}</name>
+		</author>
+{%- endif %}
+{%- if page.description %}
+		<summary>{{ page.description }}</summary>
+{%- endif %}
+		<content type="html" xml:base="{{ site.uri }}" xml:lang="en"><![CDATA[{{ page.short | trim }}]]></content>
+	</entry>
+{%- endfor %}
+</feed>
+

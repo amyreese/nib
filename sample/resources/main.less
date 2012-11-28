@@ -1,0 +1,207 @@
+@gutter: 30px;
+
+@logo-font: Georgia, serif;
+@header-font: serif;
+@text-font: sans-serif;
+@code-font: monospace;
+
+@background-color: #fcfcfc;
+@border-color: #e0e0e0;
+@logo-color: #444;
+@text-color: #222;
+@link-color: #245;
+@muted-text-color: #999;
+@muted-link-color: #789;
+@code-background-color: #f6f6f6;
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}input,textarea,select{*font-size:100%;}legend{color:#000;}
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, code,
+del, dfn, em, img, q, dl, dt, dd, ol, ul, li,
+table, caption, tbody, tfoot, thead, tr, th, td, hr{
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+}
+
+html, body {
+	background: @background-color;
+	font-family: @text-font;
+	font-size: 16px;
+	line-height: 20px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: @header-font;
+}
+
+code {
+	font-family: @code-font;
+}
+
+a {
+	color: @link-color;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+.muted {
+	color: @muted-text-color;
+	a {
+		color: @muted-link-color;
+	}
+}
+
+#wrapper {
+	width: 90%;
+	margin: auto;
+	max-width: 1200px;
+}
+
+#header {
+	margin-top: @gutter * 2;
+
+	#logo {
+		padding-left: @gutter;
+		border-bottom: 4px solid @border-color;
+		line-height: 10px;
+
+		a {
+			color: @logo-color;
+			font-family: @logo-font;
+			font-size: 48px;
+			font-weight: bold;
+			letter-spacing: -2px;
+		}
+		a:hover {
+			text-decoration: none;
+		}
+
+		#tagline {
+			position: relative;
+			top: -1px;
+			padding-left: @gutter / 2;
+			color: @logo-color;
+			font-family: @header-font;
+			font-size: 18px;
+			font-weight: bold;
+		}
+	}
+
+	#menu {
+		padding-left: @gutter;
+		border-bottom: 1px solid @border-color;
+		font-family: @header-font;
+		font-size: 18px;
+		font-weight: bold;
+
+		li {
+			display: inline-block;
+			margin: 4px @gutter 4px 0;
+
+			a {
+				color: @logo-color;
+			}
+		}
+	}
+}
+
+.posts, .page {
+	margin: @gutter @gutter @gutter * 2;
+
+	.title {
+		font-size: 32px;
+		line-height: 32px;
+	}
+}
+
+.post {
+	margin: @gutter 0 @gutter * 2;
+
+	.metadata, .more, .permalink {
+		color: @muted-text-color;
+		font-size: 14px;
+		line-height: 16px;
+
+		a {
+			color: @muted-link-color;
+		}
+	}
+}
+
+.short, .content, .page {
+	h1, h2, h3, h4, h5, h6 {
+		line-height: 100%;
+	}
+
+	h1 { font-size: 32px; }
+	h2 { font-size: 28px; }
+	h3 { font-size: 24px; }
+	h4 { font-size: 22px; }
+	h5 { font-size: 20px; }
+	h6 { font-size: 18px; }
+
+	p {
+		margin: @gutter / 2 0;
+	}
+
+	blockquote {
+		margin: 0 @gutter / 2;
+		padding: @gutter / 3 @gutter / 2;
+		border-left: 2px solid @border-color;
+
+		p:first-child {
+			margin-top: 0;
+		}
+
+		p:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	ul {
+		list-style: disc outside;
+
+		li {
+			list-style: disc outside;
+			margin: @gutter/4 @gutter 0;
+		}
+	}
+
+	li {
+		p:first-child {
+			margin-top: 0;
+		}
+	}
+
+	pre {
+		margin: 0 @gutter;
+		padding: @gutter / 3 @gutter / 2;
+		border-left: 1px solid @border-color;
+		border-right: 1px solid @border-color;
+		background: @code-background-color;
+		font-size: 14px;
+		line-height: 18px;
+	}
+}
+
+#footer {
+	padding: @gutter;
+	border-top: 1px solid @border-color;
+	text-align: center;
+
+	color: @muted-text-color;
+
+	a {
+		color: @muted-link-color;
+	}
+}
