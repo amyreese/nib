@@ -19,7 +19,7 @@ template_path: templates
 output_path: site
 
 load_plugins: ["*"]
-ignore_plugins: []
+ignore_plugins: ["prettyurls"]
 
 blog:
     archive:
