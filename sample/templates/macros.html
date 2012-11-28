@@ -3,8 +3,11 @@
 	<h2 class="title"><a href="{{ page.link }}">{{ page.title }}</a>{% if page.link != page.uri %} <span class="muted">&rarr;</span>{% endif %}</h2>
 	<div class="metadata">
 		<span class="timestamp">Posted on {{ page.date | longdate }}</span>
+		{%- if page.author %}
+		<span class="author">by {{ page.author }}</span>
+		{%- endif %}
 		<span class="permalink"><a href="{{ page.uri }}">&raquo;</a></span>
-		<span class="tags">Tagged as 
+		<span class="tags">Tagged as
 		{%- for tag in page.tags %}
 			<a class="tag" href="{{ page.tags[tag].uri }}">{{ tag }}</a>
 		{%- endfor %}
