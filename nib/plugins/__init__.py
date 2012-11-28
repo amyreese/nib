@@ -12,6 +12,9 @@ def load(options):
     for filename in files:
         name, ext = path.splitext(filename)
 
+        if name.startswith('_'):
+            continue
+
         if ext == '.py':
             if name in ignore_plugins:
                 continue
