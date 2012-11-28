@@ -1,1 +1,2 @@
 include README LICENSE
+include nib/defaults.nib nib/sample.zip
