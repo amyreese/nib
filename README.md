@@ -11,31 +11,17 @@ be easily extended to create new content types with customized behaviors.
 Concept
 -------
 
-Nib reads in hierarchical directory of Markdown-formatted documents that
-contain YAML-formatted headers with attributes and metadata.  The metadata
-includes a document type, which maps back to a series of predefined document
-processors, as well as arbitrary attributes.
-
-Document processors are then given a list of all documents that match the
-processor's document type, then returns a modified list of documents.
-Processors can modify existing documents, or optionally generate a set of
-"virtual" pages to include in its return value, allowing processors to create
-archives, tag pages, and more.
-
-Once all document processors have been run, document bodies are run through
-the Markdown processor, and then passed to the appropriate templates for final
-rendering and output to static files.
-
-Static resources, such as CSS, Javascript, and images, are then matched to
-configurable resource processors and merged with the document output. This
-step allows for use of pre-processors or generators for static resources,
-such as LessCSS, JS minifiers, or image optimizers.
+Nib uses a pluggable content pipeline that differentiates between "resources"
+like CSS or Javascript, and "documents" such as static pages or blog posts.
+The two pipelines are similar, are executed in parallel, and define multiple
+hooks where plugins can process a subset of entities, and even remove entities
+or generate new ones at runtime.
 
 
 Requirements
 ------------
 
-- Python 3
+- Python 3.2
 
 
 Installation
@@ -48,6 +34,63 @@ To install the latest official release:
 or to install the version currently checked out from source:
 
     $ python3 setup.py install
+
+
+Getting Started
+---------------
+
+Once Nib is installed, you can generate basic configuration and site using the
+built-in wizard:
+
+    $ mkdir somesite && cd somesite
+    $ nib wizard
+    ...
+
+Once the wizard is complete, you should have a site configuration file, some
+example documents (a page and two blog posts), and a minimal site theme
+consisting of resources (favicon, CSS, and robots.txt), and templates:
+
+    $ ls
+    config.nib  documents/  resources/  templates/
+
+    $ ls documents
+    about.md  links/  posts/
+
+    $ ls resources
+    favicon.ico  main.less  robots.txt
+
+    $ ls templates
+    feed.xml  list.html  macros.html  page.html  post.html  posts.html
+
+To build the site:
+
+    $ nib
+    ...
+    Done
+
+The resulting HTML and resources will be in the `site/` directory:
+
+    $ ls
+    config.nib  documents/  resources/  site/  templates/
+
+    $ ls site
+    2012/  about.html  archive.html  favicon.ico  feed.xml  index.html  links/  main.css  posts/  robots.txt  tags/
+
+To test the resulting site, Nib can run a simple HTTP server, as well as open
+the local server in your preferred web browser:
+
+    $ nib serve
+    Serving site on port 8000... press Ctrl-C to terminate.
+    ^C
+    Done
+
+or:
+
+    $ nib serve --port 9000 --browse
+    Serving site on port 9000... press Ctrl-C to terminate.
+    Opening http://localhost:9000 in web browser...
+    ^C
+    Done
 
 
 License
@@ -67,3 +110,6 @@ It builds on top of many fine projects from the open source community, such as:
 - [PyYAML](http://pyyaml.org)
 - [sh](https://github.com/amoffat/sh)
 
+Inspiration for Nib its design is thanks to
+[Oben Sonne](http://obensonne.bitbucket.org/) and his project
+[Poole](http://bitbucket.org/obensonne/poole).
