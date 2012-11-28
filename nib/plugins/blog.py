@@ -16,6 +16,7 @@ class BlogDateProcessor(Processor):
 @document('blog')
 class BlogDocumentProcessor(Processor):
     def process(self, documents, resources):
+        archives = self.options['blog']['archive']
         uris = self.options['blog']['uris']
         templates = self.options['blog']['templates']
         blog_pages = {}
@@ -58,12 +59,15 @@ class BlogDocumentProcessor(Processor):
                     'day': date.day,
                 }
 
-                blog_page('yearly', parent=archive_page, child=document,
-                          title=date.strftime('%Y'), **kwargs)
-                blog_page('monthly', parent=archive_page, child=document,
-                          title=date.strftime('%B %Y'), **kwargs)
-                blog_page('daily', parent=archive_page, child=document,
-                          title=date.strftime('%B %d, %Y'), **kwargs)
+                if archives['yearly']:
+                    blog_page('yearly', parent=archive_page, child=document,
+                              title=date.strftime('%Y'), **kwargs)
+                if archives['monthly']:
+                    blog_page('monthly', parent=archive_page, child=document,
+                              title=date.strftime('%B %Y'), **kwargs)
+                if archives['daily']:
+                    blog_page('daily', parent=archive_page, child=document,
+                              title=date.strftime('%B %d, %Y'), **kwargs)
 
             if 'tags' in document:
                 tags = [token.strip() for token in document['tags'].split(',')]

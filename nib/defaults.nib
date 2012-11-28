@@ -22,6 +22,10 @@ load_plugins: ["*"]
 ignore_plugins: []
 
 blog:
+    archive:
+        yearly: True
+        monthly: True
+        daily: False
     uris:
         feed: "feed.xml"
         index: "index.html"
