@@ -7,11 +7,12 @@ import shutil
 if path.isfile('README.md'):
     shutil.copyfile('README.md', 'README')
 
-if path.exists('sample/site'):
-    shutil.rmtree('sample/site')
-if path.exists('sample/config.nib'):
-    os.unlink('sample/config.nib')
-shutil.make_archive('nib/sample', 'zip', 'sample')
+if path.isdir('sample'):
+  if path.exists('sample/site'):
+      shutil.rmtree('sample/site')
+  if path.exists('sample/config.nib'):
+      os.unlink('sample/config.nib')
+  shutil.make_archive('nib/sample', 'zip', 'sample')
 
 import nib
 
@@ -26,7 +27,7 @@ setup(name='Nib',
                    'Programming Language :: Python',
                    'Programming Language :: Python :: 3',
                    'Topic :: Utilities',
-                   'Development Status :: 4 - Beta',
+                   'Development Status :: 3 - Alpha',
                    ],
       license='MIT License',
       install_requires=['sh>=1.0',
