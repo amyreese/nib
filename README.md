@@ -17,6 +17,9 @@ The two pipelines are similar, are executed in parallel, and define multiple
 hooks where plugins can process a subset of entities, and even remove entities
 or generate new ones at runtime.
 
+An example site generated from the default wizard and templates is available at
+http://nib.noswap.com
+
 
 Requirements
 ------------
