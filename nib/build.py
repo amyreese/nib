@@ -176,12 +176,15 @@ class Build(object):
         render = Render(self.options, documents)
 
         for document in documents:
+            render.render_content(document)
+
+        for document in documents:
             filepath = path.join(self.output_path, document.path)
             filepath += document.extension
 
             print('Rendering document {}'.format(filepath))
             with open(filepath, 'w') as f:
-                f.write(render.render(document))
+                f.write(render.render_template(document))
 
         for resource in resources:
             filepath = path.join(self.output_path, resource.path)

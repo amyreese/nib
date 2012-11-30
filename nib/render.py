@@ -24,18 +24,18 @@ class Render(object):
         self.site = dict(options['site'], documents=documents)
         self.now = time.time()
 
-        for document in documents:
-            params = {
-                'now': self.now,
-                'site': self.site,
-                'page': document,
-            }
-            params.update(document)
+    def render_content(self, document):
+        params = {
+            'now': self.now,
+            'site': self.site,
+            'page': document,
+        }
+        params.update(document)
 
-            document.short = Template(document.short).render(**params)
-            document.content = Template(document.content).render(**params)
+        document.short = Template(document.short).render(**params)
+        document.content = Template(document.content).render(**params)
 
-    def render(self, document):
+    def render_template(self, document):
         if 'template' in document:
             template = self.env.get_template(document['template'])
 
