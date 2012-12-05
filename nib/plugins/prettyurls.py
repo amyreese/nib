@@ -10,10 +10,10 @@ RewriteCond %{DOCUMENT_ROOT}/$1.html -f
 RewriteRule ^(.*)$ /$1.html [L]
 
 RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
-RewriteRule ^(.*)/$ /$1 [R]
+RewriteRule ^(.*)/$ /$1 [L,R]
 
 RewriteCond %{DOCUMENT_ROOT}/$1.html -f
-RewriteRule ^(.*)/$ /$1 [R]
+RewriteRule ^(.*)/$ /$1 [L,R]
 """
 
 apache_redirects_base = b"""
