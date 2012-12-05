@@ -33,8 +33,8 @@ blog:
         tag: "tags/{tag}.html"
         archive: "archive.html"
         yearly: "{year}/index.html"
-        monthly: "{year}/{month}/index.html"
-        daily: "{year}/{month}/{day}.html"
+        monthly: "{year}/{month:2>}/index.html"
+        daily: "{year}/{month:2>}/{day:2>}.html"
     templates:
         post: "post.html"
         feed: "feed.xml"
