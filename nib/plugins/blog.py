@@ -54,6 +54,7 @@ class BlogDocumentProcessor(Processor):
             if type(document['date']) == datetime.date:
                 date = document['date']
                 kwargs = {
+                    'date': date,
                     'year': date.year,
                     'month': date.month,
                     'day': date.day,
@@ -61,13 +62,13 @@ class BlogDocumentProcessor(Processor):
 
                 if archives['yearly']:
                     blog_page('yearly', parent=archive_page, child=document,
-                              title=date.strftime('%Y'), **kwargs)
+                              title=date.strftime('%Y'), type='year', **kwargs)
                 if archives['monthly']:
                     blog_page('monthly', parent=archive_page, child=document,
-                              title=date.strftime('%B %Y'), **kwargs)
+                              title=date.strftime('%B %Y'), type='month', **kwargs)
                 if archives['daily']:
                     blog_page('daily', parent=archive_page, child=document,
-                              title=date.strftime('%B %d, %Y'), **kwargs)
+                              title=date.strftime('%B %d, %Y'), type='day', **kwargs)
 
             if 'tags' in document:
                 tags = [token.strip() for token in document['tags'].split(',')]
