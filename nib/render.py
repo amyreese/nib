@@ -32,8 +32,8 @@ class Render(object):
         }
         params.update(document)
 
-        document.short = Template(document.short).render(**params)
-        document.content = Template(document.content).render(**params)
+        document.short = self.env.from_string(document.short).render(**params)
+        document.content = self.env.from_string(document.content).render(**params)
 
     def render_template(self, document):
         if 'template' in document:
