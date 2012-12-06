@@ -1,5 +1,6 @@
 {% extends "page.html" %}
 {% block content %}
+{{ content }}
 <ul>
 {% for p in pages | sort(attribute='date', reverse=True) if p.type == 'month' %}
 <li><a href="{{ p.uri }}">{{ p.title }}</a></li>
