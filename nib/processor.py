@@ -4,6 +4,7 @@ postprocessors = []
 document_processors = {}
 resource_processors = {}
 markup_processors = {}
+render_processors = []
 
 def resource(extensions):
     if type(extensions) != list:
@@ -41,6 +42,10 @@ def markup(extensions):
                 markup_processors[extension] = []
             markup_processors[extension].append(cls)
     return decorator
+
+def render(cls):
+    render_processors.append(cls)
+    return cls
 
 class Processor(object):
     def __init__(self, options):

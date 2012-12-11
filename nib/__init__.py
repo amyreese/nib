@@ -1,4 +1,4 @@
-version = '0.4.5'
+version = '0.4.6'
 
 from os import path
 cwd = path.abspath(path.dirname(__file__))
@@ -10,7 +10,7 @@ try:
     from nib.resource import Resource
     from nib.render import Render, jinja
     from nib.processor import Processor
-    from nib.processor import before, after, document, resource, markup
+    from nib.processor import before, after, document, resource, markup, render
     from nib.build import Build
 
     import nib.plugins

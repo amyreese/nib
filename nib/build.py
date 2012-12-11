@@ -4,7 +4,8 @@ from urllib.parse import urljoin
 
 from nib import Document, Resource, Render
 from nib.processor import preprocessors, postprocessors,\
-    document_processors, resource_processors, markup_processors
+    document_processors, resource_processors, markup_processors,\
+    render_processors
 import nib.plugins
 
 class Build(object):
@@ -176,7 +177,13 @@ class Build(object):
         render = Render(self.options, documents)
 
         for document in documents:
+            print('Rendering content {}'.format(document.path))
             render.render_content(document)
+
+        # pre-render final processing
+        for p in render_processors:
+            print('Running render processor {}'.format(p))
+            documents, resources = p(self.options).process(documents, resources)
 
         for document in documents:
             filepath = path.join(self.output_path, document.path)
