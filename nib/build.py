@@ -167,9 +167,11 @@ class Build(object):
 
         # finalize document uris
         for document in documents:
-            document.uri = urljoin(self.options['site']['root'], document.uri)
+            document.uri = urljoin(self.options['site']['uri'],
+                                   self.options['site']['root'],
+                                   document.uri)
             if not document.get('link'):
-                document['link'] = urljoin(self.options['site']['uri'], document.uri)
+                document['link'] = document.uri
 
         return documents, resources
 
