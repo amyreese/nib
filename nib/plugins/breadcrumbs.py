@@ -17,11 +17,9 @@ class BreadcrumbProcessor(Processor):
 
             for segment in segments:
                 uri = path.join(uri, segment).strip('/')
-                print(uri)
                 if uri in uris:
                     page = uris[uri]
                     if 'title' in page and page['title']:
-                        print(page['title'])
                         breadcrumbs.append(uris[uri])
 
             doc['breadcrumbs'] = breadcrumbs
