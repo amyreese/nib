@@ -169,7 +169,7 @@ class Build(object):
         for document in documents:
             document.uri = urljoin(self.options['site']['root'], document.uri)
             if not document.get('link'):
-                document['link'] = document.uri
+                document['link'] = urljoin(self.options['site']['uri'], document.uri)
 
         return documents, resources
 
