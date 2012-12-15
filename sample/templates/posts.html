@@ -2,7 +2,7 @@
 {% block page %}
 <div class="posts">
 {%- if page.title %}
-<h2 class="title"><a href="{{page.uri }}">{{ page.title }}</a></h2>
+<h2 class="title">{{ breadcrumbs(page) }}</h2>
 {%- endif %}
 {{ content }}
 {% for p in pages | sort(reverse=True, attribute='date') %}

@@ -1,4 +1,4 @@
-version = '0.4.7'
+version = '0.4.8'
 
 from os import path
 cwd = path.abspath(path.dirname(__file__))

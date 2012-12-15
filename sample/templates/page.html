@@ -1,4 +1,4 @@
-{%- from 'macros.html' import post -%}
+{%- from 'macros.html' import post, breadcrumbs -%}
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,7 +34,7 @@
 			{%- block page %}
 			<div class="page">
 				{%- if title %}
-				<h2 class="title"><a href="{{ page.uri }}">{{ page.title }}</a></h2>
+				<h2 class="title">{{ breadcrumbs(page) }}</h2>
 				{%- endif %}
 				{%- block content %}
 				{{ content }}

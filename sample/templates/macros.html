@@ -27,3 +27,10 @@
 	{%- endif %}
 </div>
 {%- endmacro %}
+
+{%- macro breadcrumbs(page) %}
+{%- for breadcrumb in page.breadcrumbs %}
+{%- if not loop.first %} &raquo; {% endif -%}
+<a href="{{ breadcrumb.link }}">{{ breadcrumb.title }}</a>
+{%- endfor %}
+{%- endmacro %}
