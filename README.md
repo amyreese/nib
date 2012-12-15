@@ -2,20 +2,11 @@ Nib
 ===
 
 Nib is a static site generator, written in Python, geared toward creating a
-simple site or blog, with the ability to generate metadata pages based on
-content attributes.  It understands concepts like tags, archives, and paging
-series of individual entries into larger blocks of content.  It is designed to
-be easily extended to create new content types with customized behaviors.
-
-
-Concept
--------
-
-Nib uses a pluggable content pipeline that differentiates between "resources"
-like CSS or Javascript, and "documents" such as static pages or blog posts.
-The two pipelines are similar, are executed in parallel, and define multiple
-hooks where plugins can process a subset of entities, and even remove entities
-or generate new ones at runtime.
+simple site or blog.  Nib uses a pluggable content pipeline that differentiates
+between "resources" like CSS or Javascript, and "documents" such as static pages
+or blog posts. The two pipelines are similar, are executed in parallel, and
+define multiple hooks where plugins can process a subset of entities, and even
+remove entities or generate new ones at runtime.
 
 An example site generated from the default wizard and templates is available at
 http://nib.noswap.com
