@@ -14,7 +14,17 @@ def load(filename, supplement=False):
         content = f.read()
 
     documents = document_marker.split(content, 2)
-    data = yaml.load(documents.pop(0), Loader=SafeLoader)
+
+    try:
+        data_document = documents.pop(0)
+        data = yaml.load(data_document, Loader=SafeLoader)
+
+    except yaml.YAMLError:
+        if supplement:
+            data = {}
+            documents.insert(0, data_document)
+        else:
+            raise
 
     if supplement:
         return data, documents
