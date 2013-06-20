@@ -27,6 +27,7 @@ To install the latest official release:
 
 or to install the version currently checked out from source:
 
+    $ pip install -r requirements.txt
     $ python3 setup.py install
 
 
