@@ -1,20 +1,18 @@
-version = '0.4.13'
+from __future__ import absolute_import, division, print_function, unicode_literals
+
+version = '0.5.0'
 
 from os import path
 cwd = path.abspath(path.dirname(__file__))
 
-try:
-    import nib.yaml as yaml
-    from nib.config import Config
-    from nib.document import Document
-    from nib.resource import Resource
-    from nib.render import Render, jinja
-    from nib.processor import Processor
-    from nib.processor import before, after, document, resource, markup, render
-    from nib.build import Build
+from . import yaml
+from .config import Config
+from .document import Document
+from .resource import Resource
+from .render import Render, jinja
+from .processor import Processor
+from .processor import before, after, document, resource, markup, render
+from .build import Build
 
-    import nib.plugins
+from . import plugins
 
-except ImportError:
-    # let's hope this only happens in setup.py until I find a better way
-    pass

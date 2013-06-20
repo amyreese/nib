@@ -15,7 +15,7 @@ http://nib.noswap.com
 Requirements
 ------------
 
-- Python 3.2
+- Python 2.7 or 3.2+
 
 
 Installation

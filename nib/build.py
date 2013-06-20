@@ -1,6 +1,11 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import os
 from os import path
-from urllib.parse import urljoin
+try:
+    from urllib.parse import urljoin
+except ImportError:
+    from urlparse import urljoin
 
 from nib import Document, Resource, Render
 from nib.processor import preprocessors, postprocessors,\
@@ -217,7 +222,10 @@ class Build(object):
         print('Creating output hierarchy: {}'.format(hierarchy))
 
         for dir in hierarchy:
-            os.makedirs(dir, exist_ok=True)
+            try:
+                os.makedirs(dir)
+            except os.error:
+                pass
 
     def run(self):
         documents, resources = self.load()
