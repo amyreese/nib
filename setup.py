@@ -14,11 +14,9 @@ if path.isdir('sample'):
       os.unlink('sample/config.nib')
   shutil.make_archive('nib/sample', 'zip', 'sample')
 
-import nib
-
 setup(name='Nib',
       description='Static Site Generator',
-      version=nib.version,
+      version='0.5.1',
       author='John Reese',
       author_email='john@noswap.com',
       url='https://github.com/jreese/nib',
