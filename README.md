@@ -11,6 +11,8 @@ remove entities or generate new ones at runtime.
 An example site generated from the default wizard and templates is available at
 http://nib.noswap.com
 
+[![Build Status](https://travis-ci.org/jreese/nib.png?branch=master)](https://travis-ci.org/jreese/nib)
+
 
 Requirements
 ------------
