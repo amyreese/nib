@@ -108,7 +108,12 @@ if __name__ == '__main__':
                     sys.exit(0)
 
             try:
-                from http.server import HTTPServer, SimpleHTTPRequestHandler
+                if not sys.version_info[0] == 2:
+                    from http.server import HTTPServer, SimpleHTTPRequestHandler
+                else:
+                    from SimpleHTTPServer import SimpleHTTPRequestHandler
+                    from SocketServer import TCPServer as HTTPServer
+
                 server = HTTPServer(('', options.port), SimpleHTTPRequestHandler)
 
                 print('Serving site on port {}... press Ctrl-C to terminate.'.format(options.port))
