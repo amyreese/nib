@@ -86,6 +86,7 @@ if __name__ == '__main__':
 
             cwd = path.abspath(os.getcwd())
             site_path = path.join(cwd, config['output_path'])
+            url = 'http://localhost:{}'.format(options.port)
 
             if not path.exists(site_path):
                 sys.stderr.write('Site not yet generated. Run `nib build` first.')
@@ -101,8 +102,7 @@ if __name__ == '__main__':
 
                     time.sleep(1)
 
-                    url = 'http://localhost:{}'.format(options.port)
-                    print('Opening {} in web browser...'.format(url))
+                    print('Opening {0} in web browser...'.format(url))
                     webbrowser.open(url)
 
                     sys.exit(0)
@@ -116,7 +116,7 @@ if __name__ == '__main__':
 
                 server = HTTPServer(('', options.port), SimpleHTTPRequestHandler)
 
-                print('Serving site on port {}... press Ctrl-C to terminate.'.format(options.port))
+                print('Serving site at {0} ... press Ctrl-C to terminate.'.format(url))
                 server.serve_forever()
 
             except KeyboardInterrupt:
