@@ -23,6 +23,14 @@ RewriteEngine on
 RewriteBase /
 """
 
+nginx_rules = b"""
+location / {
+    #root {0};
+    index index.html;
+    try_files $uri $uri.html $uri/index.html;
+}
+"""
+
 @after
 class PrettyURLProcessor(Processor):
     def process(self, documents, resources):
@@ -44,5 +52,9 @@ class PrettyURLProcessor(Processor):
             resources.append(htaccess)
 
         htaccess.content += apache_redirects
+
+        nginx = Resource(path='.nginx',
+                         content=nginx_rules)
+        resources.append(nginx)
 
         return documents, resources
