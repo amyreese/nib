@@ -41,3 +41,12 @@ class Document(dict):
                         short=short,
                         **metadata
                         )
+
+    def clone(self):
+        new_doc = Document(path=self.path + self.extension,
+                           uri=self.uri,
+                           group=self.group,
+                           content=self.content,
+                           short=self.short,
+                           **self)
+        return new_doc
