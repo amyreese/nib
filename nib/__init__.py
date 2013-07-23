@@ -5,6 +5,13 @@ version = '0.5.2'
 from os import path
 cwd = path.abspath(path.dirname(__file__))
 
+_instance = None
+def instance(new=None):
+    global _instance
+    if new:
+        _instance = new
+    return _instance
+
 from . import yaml
 from .config import Config
 from .document import Document

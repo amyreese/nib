@@ -7,6 +7,7 @@ try:
 except ImportError:
     from urlparse import urljoin
 
+import nib
 from nib import Document, Resource, Render
 from nib.processor import preprocessors, postprocessors,\
     document_processors, resource_processors, markup_processors,\
@@ -21,6 +22,7 @@ class Build(object):
         self.options = options
 
         nib.plugins.load(options)
+        nib.instance(self)
 
     def load(self):
         documents = []

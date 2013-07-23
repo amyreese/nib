@@ -1,10 +1,17 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import os.path
+import nib
 from nib import yaml
 
 class Document(dict):
     def __init__(self, path=None, uri=None, group=None, content=None, short=None, **kwargs):
+        options = nib.instance().options
+
+        defaults = options['defaults']
+        for key in defaults:
+            kwargs.setdefault(key, defaults[key])
+
         dict.__init__(self, **kwargs)
         self.path, self.extension = os.path.splitext(path)
         self.uri = uri
@@ -23,9 +30,6 @@ class Document(dict):
 
         if options:
             path = os.path.relpath(path, options['document_path'])
-            defaults = options['defaults']
-            for key in defaults:
-                metadata.setdefault(key, defaults[key])
 
         content = sections.pop(0)
         short = content
