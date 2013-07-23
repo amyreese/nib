@@ -4,6 +4,10 @@ defaults:
     description:
     link:
     author:
+	paginate: True
+	per_page: 10
+	sort_by: date
+	reverse: True
 
 site:
     title: Some site

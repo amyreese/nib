@@ -45,10 +45,10 @@ class BlogDocumentProcessor(Processor):
 
             return page
 
-        feed_page = blog_page('feed')
+        feed_page = blog_page('feed', paginate=False)
         index_page = blog_page('index')
-        archive_page = blog_page('archive', title='Archive')
-        tags_page = blog_page('tags', title='Tags')
+        archive_page = blog_page('archive', title='Archive', paginate=False)
+        tags_page = blog_page('tags', title='Tags', paginate=False)
 
         for document in documents:
             document['template'] = templates['post']
