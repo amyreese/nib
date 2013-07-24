@@ -5,8 +5,21 @@
 <h2 class="title">{{ breadcrumbs(page) }}</h2>
 {%- endif %}
 {{ content }}
-{% for p in pages | sort(reverse=True, attribute='date') %}
+{% for p in pages %}
 {{ post(p, short=True) }}
 {% endfor %}
+{%- if page.previous or page.next %}
+<p class="more">
+{%- if page.previous %}
+<a href="{{ page.previous.uri }}">&larr; Previous</a>
+{%- endif %}
+{%- if page.previous and page.next %}
+&emsp;
+{%- endif %}
+{%- if page.next %}
+<a href="{{ page.next.uri }}">Next &rarr;</a>
+{%- endif %}
+</p>
+{%- endif %}
 </div>
 {% endblock %}
