@@ -1,6 +1,6 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-version = '0.5.4'
+version = '0.5.5'
 
 from os import path
 cwd = path.abspath(path.dirname(__file__))

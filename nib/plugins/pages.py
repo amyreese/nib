@@ -1,8 +1,8 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-from nib import Processor, render
+from nib import Processor, before
 
-@render
+@before
 class PagesProcessor(Processor):
     def process(self, documents, resources):
         for document in documents:
