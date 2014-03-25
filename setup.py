@@ -16,7 +16,7 @@ if path.isdir('sample'):
 
 setup(name='Nib',
       description='Static Site Generator',
-      version='0.5.5',
+      version='0.5.6',
       author='John Reese',
       author_email='john@noswap.com',
       url='https://github.com/jreese/nib',
