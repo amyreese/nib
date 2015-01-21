@@ -7,7 +7,15 @@ from nib import Processor, markup
 class MarkdownProcessor(Processor):
     def __init__(self, options):
         self.options = options
-        self.markdown = markdown.Markdown(output_format='html5')
+        config = {
+            'markdown.extensions.footnotes': {
+                'UNIQUE_IDS': True,
+            },
+        }
+        self.markdown = markdown.Markdown(output_format='html5',
+                                          extensions=config.keys(),
+                                          extension_configs=config,
+                                          )
 
     def document(self, document):
         document.short = self.markdown.reset().convert(document.short)
