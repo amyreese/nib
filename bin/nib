@@ -157,8 +157,7 @@ if __name__ == '__main__':
         elif options.action == 'wizard':
             # If the directory's not empty
             if os.listdir('.') != []:
-                answer = getYN(
-                                'This directory is not empty, '
+                answer = getYN( 'This directory is not empty, '
                                 'the wizard will overwrite existing files.'
                                 ' Proceed? ', False)
                 if not answer:
