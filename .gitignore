@@ -1,4 +1,6 @@
 *.py[co]
+# PyCharm ide files
+.idea/
 
 # Packages
 *.egg
