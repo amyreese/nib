@@ -9,6 +9,7 @@ class LessCSSProcessor(Processor):
     def resource(self, resource):
         filepath = path.join(self.options['resource_path'],
                              resource.path + resource.extension)
+        print("Processing: ", filepath)
         resource.content = bytearray(str(sh.lessc(filepath)), 'utf-8')
         resource.extension = '.css'
 
