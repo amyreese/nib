@@ -14,22 +14,22 @@ else:
     input_func = input
 
 
-def getYN(question, dflt=True):
+def getYN(question, default=True):
     """
-    Gets yes/no answer to prompt, defaulting to `dflt` for enter.
+    Gets yes/no answer to prompt, defaulting to `default` for enter.
 
     Returns boolean.
     """
-    if dflt:
+    if default:
         choices = (question, 'Y', 'n')
     else:
-        choices = (question, 'N', 'y')
+        choices = (question, 'y', 'N')
 
     prompt = '%s %s/%s:' % choices
     while True:
         ans = input_func(prompt)
         if not ans:
-            return dflt
+            return default
         if ans in 'yYnN':
             break
 
@@ -156,12 +156,12 @@ if __name__ == '__main__':
 
         elif options.action == 'wizard':
             # If the directory's not empty
-            if os.listdir('.') != []:
-                answer = getYN( 'This directory is not empty, '
-                                'the wizard will overwrite existing files.'
-                                ' Proceed? ', False)
+            if os.listdir('.'):
+                answer = getYN('This directory is not empty, '
+                               'the wizard will overwrite existing files. '
+                               'Proceed?', False)
                 if not answer:
-                    print("Not overwriting non-empty directory...exiting.")
+                    print('Not overwriting non-empty directory... exiting.')
                     sys.exit(1)
 
             config = nib.Config()

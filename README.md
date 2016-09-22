@@ -21,7 +21,6 @@ Requirements
 - Less compilation requires the [less](http://lesscss.org/) package to be installed globally
 - SASS compilation requires [sass](http://sass-lang.com/install)
 
-Installation of these components is beyond the scope of this project.
 
 Installation
 ------------
