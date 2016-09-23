@@ -8,6 +8,35 @@ import sys
 import nib
 from nib.config import default_config
 
+if sys.version_info[0] == 2:
+    input_func = raw_input
+else:
+    input_func = input
+
+
+def getYN(question, default=True):
+    """
+    Gets yes/no answer to prompt, defaulting to `default` for enter.
+
+    Returns boolean.
+    """
+    if default:
+        choices = (question, 'Y', 'n')
+    else:
+        choices = (question, 'y', 'N')
+
+    prompt = '%s %s/%s:' % choices
+    while True:
+        ans = input_func(prompt)
+        if not ans:
+            return default
+        if ans in 'yYnN':
+            break
+
+        print('Please enter y or n.')
+
+    return ans in 'yY'
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Get more information at http://github.com/jreese/nib')
     subparsers = parser.add_subparsers(title='actions',
@@ -126,15 +155,14 @@ if __name__ == '__main__':
             print('Done')
 
         elif options.action == 'wizard':
-            empty = True
-            for dirpath, dirs, files in os.walk('.'):
-                if len(dirs) > 0 or len(files) > 0:
-                    empty = False
-                    break
-
-            overwrite = input('This directory is not empty, the wizard will overwrite existing files. Proceed? [y/N]: ')
-            if not overwrite.lower().startswith('y'):
-                sys.exit(1)
+            # If the directory's not empty
+            if os.listdir('.'):
+                answer = getYN('This directory is not empty, '
+                               'the wizard will overwrite existing files. '
+                               'Proceed?', False)
+                if not answer:
+                    print('Not overwriting non-empty directory... exiting.')
+                    sys.exit(1)
 
             config = nib.Config()
 
@@ -142,9 +170,7 @@ if __name__ == '__main__':
             print('-- Nib Wizard --')
 
             print()
-            custom_config = input('Customize the default config? [Y/n]: ')
-            if not custom_config.lower().startswith('n'):
-
+            if getYN('Customize the default config?', False):
                 print()
                 print('- Site Options -')
                 print()
@@ -180,16 +206,14 @@ if __name__ == '__main__':
                 print('- Plugin Options -')
                 print()
 
-                enable_prettyurls = input('Enable pretty URLs? Uses Apache .htaccess [y/N]: ')
-                if enable_prettyurls.lower().startswith('y'):
+                if getYN('Enable pretty URLs? Uses Apache .htaccess?', False):
                     config['ignore_plugins'].remove('prettyurls')
 
                 print()
                 print('- Template Options -')
                 print()
 
-            copy_sample = input('Copy sample site templates? [Y/n]: ')
-            if not copy_sample.lower().startswith('n'):
+            if getYN('Copy sample site templates?', True):
                 shutil.unpack_archive(path.join(nib.cwd, 'sample.zip'), format='zip')
 
             nib.yaml.save('config.nib', config)

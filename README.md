@@ -18,6 +18,8 @@ Requirements
 ------------
 
 - Python 2.7 or 3.2+
+- Less compilation requires the [less](http://lesscss.org/) package to be installed globally
+- SASS compilation requires [sass](http://sass-lang.com/install)
 
 
 Installation
