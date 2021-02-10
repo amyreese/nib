@@ -1,5 +1,6 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+from datetime import date
 import jinja2
 from jinja2 import Environment, FileSystemLoader, Template
 from os import path
@@ -43,6 +44,7 @@ class Render(object):
 
             params = {
                 'now': self.now,
+                'today': date.today(),
                 'site': self.options['site'],
                 'page': document,
                 'content': document.content,
