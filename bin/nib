@@ -38,7 +38,7 @@ def getYN(question, default=True):
     return ans in 'yY'
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Get more information at http://github.com/jreese/nib')
+    parser = argparse.ArgumentParser(description='Get more information at http://github.com/amyreese/nib')
     subparsers = parser.add_subparsers(title='actions',
                                        dest='action')
 

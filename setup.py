@@ -18,9 +18,9 @@ setup(
     name='Nib',
     description='Static Site Generator',
     version='0.5.7',
-    author='John Reese',
-    author_email='john@noswap.com',
-    url='https://github.com/jreese/nib',
+    author='Amethyst Reese',
+    author_email='amy@noswap.com',
+    url='https://github.com/amyreese/nib',
     classifiers=[
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',

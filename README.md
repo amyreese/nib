@@ -11,7 +11,7 @@ remove entities or generate new ones at runtime.
 An example site generated from the default wizard and templates is available at
 http://nib.noswap.com
 
-[![Build Status](https://travis-ci.org/jreese/nib.png?branch=master)](https://travis-ci.org/jreese/nib)
+[![Build Status](https://travis-ci.org/amyreese/nib.png?branch=master)](https://travis-ci.org/amyreese/nib)
 
 
 Requirements
@@ -101,7 +101,7 @@ Nib is licensed under the MIT license.  See the `LICENSE` file for details.
 Credits
 -------
 
-Nib is developed by [John Reese](http://noswap.com) as a labor of love.
+Nib is developed by [Amethyst Reese](http://noswap.com) as a labor of love.
 It builds on top of many fine projects from the open source community, such as:
 
 - [Jinja2](http://jinja.pocoo.org)

@@ -13,7 +13,7 @@
 	<rights>{{ site.copyright }}</rights>
 {%- endif %}
 	<updated>{{ now | atomtime }}</updated>
-	<generator uri="http://github.com/jreese/nib">Nib</generator>
+	<generator uri="http://github.com/amyreese/nib">Nib</generator>
 {%- for page in pages | sort(reverse=True, attribute='date') %}
 	<entry>
 		<id>{{ site.uri }}{{ page.uri }}</id>
