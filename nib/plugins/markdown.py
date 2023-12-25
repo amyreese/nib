@@ -11,9 +11,12 @@ class MarkdownProcessor(Processor):
             'markdown.extensions.footnotes': {
                 'UNIQUE_IDS': True,
             },
+            'pymdownx.superfences': {}
         }
+        extensions = list(config.keys())
+        print(f"{extensions = !r}")
         self.markdown = markdown.Markdown(output_format='html5',
-                                          extensions=config.keys(),
+                                          extensions=extensions,
                                           extension_configs=config,
                                           )
 

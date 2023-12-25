@@ -78,7 +78,7 @@ class Build(object):
             completed_documents = []
             chained_documents = []
             for document in group_documents:
-                if group is '' or document.group == group:
+                if group == '' or document.group == group:
                     completed_documents.append(document)
                 else:
                     chained_documents.append(document)
@@ -116,7 +116,7 @@ class Build(object):
             completed_resources = []
             chained_resources = []
             for resource in group_resources:
-                if group is '' or resource.extension == group:
+                if group == '' or resource.extension == group:
                     completed_resources.append(resource)
                 else:
                     chained_resources.append(resource)
