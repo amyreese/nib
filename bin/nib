@@ -21,104 +21,120 @@ def getYN(question, default=True):
     Returns boolean.
     """
     if default:
-        choices = (question, 'Y', 'n')
+        choices = (question, "Y", "n")
     else:
-        choices = (question, 'y', 'N')
+        choices = (question, "y", "N")
 
-    prompt = '%s %s/%s:' % choices
+    prompt = "%s %s/%s:" % choices
     while True:
         ans = input_func(prompt)
         if not ans:
             return default
-        if ans in 'yYnN':
+        if ans in "yYnN":
             break
 
-        print('Please enter y or n.')
+        print("Please enter y or n.")
 
-    return ans in 'yY'
+    return ans in "yY"
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Get more information at http://github.com/amyreese/nib')
-    subparsers = parser.add_subparsers(title='actions',
-                                       dest='action')
 
-    parser.add_argument('-V', '--version',
-                        action='version',
-                        version='%(prog)s ' + nib.version)
-    parser.add_argument('-d', '--debug',
-                        dest='debug',
-                        action='store_true',
-                        default=False,
-                        help='debug output')
-    parser.add_argument('-c', '--config',
-                        dest='config',
-                        metavar='FILE',
-                        action='store',
-                        default='config.nib',
-                        help='site configuration file (default is config.nib)')
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="Get more information at http://github.com/amyreese/nib"
+    )
+    subparsers = parser.add_subparsers(title="actions", dest="action")
 
-    build = subparsers.add_parser('build',
-                                  help='generate site output (default action)')
+    parser.add_argument(
+        "-V", "--version", action="version", version="%(prog)s " + nib.version
+    )
+    parser.add_argument(
+        "-d",
+        "--debug",
+        dest="debug",
+        action="store_true",
+        default=False,
+        help="debug output",
+    )
+    parser.add_argument(
+        "-c",
+        "--config",
+        dest="config",
+        metavar="FILE",
+        action="store",
+        default="config.nib",
+        help="site configuration file (default is config.nib)",
+    )
 
-    config = subparsers.add_parser('config',
-                                   help='generate new site configuration')
-    config.add_argument('-f', '--force',
-                        dest='force',
-                        action='store_true',
-                        default=False,
-                        help='overwrite existing configuration files')
+    build = subparsers.add_parser("build", help="generate site output (default action)")
 
-    serve = subparsers.add_parser('serve',
-                                   help='run a simple web server and open it in a browser')
-    serve.add_argument('-p', '--port',
-                       dest='port',
-                       metavar='PORT',
-                       action='store',
-                       type=int,
-                       default=8000,
-                       help='port to run the local server on')
-    serve.add_argument('-b', '--browse',
-                       dest='browse',
-                       action='store_true',
-                       default=False,
-                       help='open web browser to local server URL')
+    config = subparsers.add_parser("config", help="generate new site configuration")
+    config.add_argument(
+        "-f",
+        "--force",
+        dest="force",
+        action="store_true",
+        default=False,
+        help="overwrite existing configuration files",
+    )
 
-    wizard = subparsers.add_parser('wizard',
-                                   help='interactively generate new site')
+    serve = subparsers.add_parser(
+        "serve", help="run a simple web server and open it in a browser"
+    )
+    serve.add_argument(
+        "-p",
+        "--port",
+        dest="port",
+        metavar="PORT",
+        action="store",
+        type=int,
+        default=8000,
+        help="port to run the local server on",
+    )
+    serve.add_argument(
+        "-b",
+        "--browse",
+        dest="browse",
+        action="store_true",
+        default=False,
+        help="open web browser to local server URL",
+    )
 
-    help = subparsers.add_parser('help',
-                                 help='show help message for a given command')
-    help.add_argument('command',
-                      nargs='?')
+    wizard = subparsers.add_parser("wizard", help="interactively generate new site")
 
+    help = subparsers.add_parser("help", help="show help message for a given command")
+    help.add_argument("command", nargs="?")
 
     options = parser.parse_args()
 
     try:
-        if options.action == 'build' or options.action is None:
+        if options.action == "build" or options.action is None:
             nib.Build(nib.Config(options.config)).run()
-            print('Done')
+            print("Done")
 
-        elif options.action == 'config':
+        elif options.action == "config":
             if path.exists(options.config):
                 if not options.force:
-                    sys.stderr.write('Warning: "{}" already exists, use --force to overwrite\n'.format(options.config))
+                    sys.stderr.write(
+                        'Warning: "{}" already exists, use --force to overwrite\n'.format(
+                            options.config
+                        )
+                    )
                     sys.exit(1)
 
                 os.unlink(options.config)
 
             shutil.copyfile(default_config, options.config)
-            print('Done')
+            print("Done")
 
-        elif options.action == 'serve':
+        elif options.action == "serve":
             config = nib.Config(options.config)
 
             cwd = path.abspath(os.getcwd())
-            site_path = path.join(cwd, config['output_path'])
-            url = 'http://localhost:{}'.format(options.port)
+            site_path = path.join(cwd, config["output_path"])
+            url = "http://localhost:{}".format(options.port)
 
             if not path.exists(site_path):
-                sys.stderr.write('Site not yet generated. Run `nib build` first.')
+                sys.stderr.write("Site not yet generated. Run `nib build` first.")
                 sys.exit(1)
 
             os.chdir(site_path)
@@ -131,7 +147,7 @@ if __name__ == '__main__':
 
                     time.sleep(1)
 
-                    print('Opening {0} in web browser...'.format(url))
+                    print("Opening {0} in web browser...".format(url))
                     webbrowser.open(url)
 
                     sys.exit(0)
@@ -143,84 +159,98 @@ if __name__ == '__main__':
                     from SimpleHTTPServer import SimpleHTTPRequestHandler
                     from SocketServer import TCPServer as HTTPServer
 
-                server = HTTPServer(('', options.port), SimpleHTTPRequestHandler)
+                class FancyRequestHandler(SimpleHTTPRequestHandler):
+                    def translate_path(self, p):
+                        p = super().translate_path(p)
+                        b = path.basename(p)
+                        _, ext = path.splitext(b)
+                        if b and not ext:
+                            p = p + ".html"
+                        return p
 
-                print('Serving site at {0} ... press Ctrl-C to terminate.'.format(url))
+                server = HTTPServer(("", options.port), FancyRequestHandler)
+
+                print("Serving site at {0} ... press Ctrl-C to terminate.".format(url))
                 server.serve_forever()
 
             except KeyboardInterrupt:
                 print()
                 pass
 
-            print('Done')
+            print("Done")
 
-        elif options.action == 'wizard':
+        elif options.action == "wizard":
             # If the directory's not empty
-            if os.listdir('.'):
-                answer = getYN('This directory is not empty, '
-                               'the wizard will overwrite existing files. '
-                               'Proceed?', False)
+            if os.listdir("."):
+                answer = getYN(
+                    "This directory is not empty, "
+                    "the wizard will overwrite existing files. "
+                    "Proceed?",
+                    False,
+                )
                 if not answer:
-                    print('Not overwriting non-empty directory... exiting.')
+                    print("Not overwriting non-empty directory... exiting.")
                     sys.exit(1)
 
             config = nib.Config()
 
             print()
-            print('-- Nib Wizard --')
+            print("-- Nib Wizard --")
 
             print()
-            if getYN('Customize the default config?', False):
+            if getYN("Customize the default config?", False):
                 print()
-                print('- Site Options -')
+                print("- Site Options -")
                 print()
 
-                site = config['site']
+                site = config["site"]
 
-                site_title = input('Site title [{}]: '.format(site['title']))
+                site_title = input("Site title [{}]: ".format(site["title"]))
                 if site_title:
-                    site['title'] = site_title
+                    site["title"] = site_title
 
-                site_tagline = input('Site tagline [{}]: '.format(site['tagline']))
+                site_tagline = input("Site tagline [{}]: ".format(site["tagline"]))
                 if site_tagline:
-                    site['tagline'] = site_tagline
+                    site["tagline"] = site_tagline
 
-                site_uri = input('Site uri [{}]: '.format(site['uri']))
+                site_uri = input("Site uri [{}]: ".format(site["uri"]))
                 if site_uri:
-                    site['uri'] = site_uri
+                    site["uri"] = site_uri
 
-                site_root = input('Site root [{}]: '.format(site['root']))
+                site_root = input("Site root [{}]: ".format(site["root"]))
                 if site_root:
-                    site['root'] = site_root
+                    site["root"] = site_root
 
-                site_author = input('Site author [{}]: '.format(site['author']))
+                site_author = input("Site author [{}]: ".format(site["author"]))
                 if site_author:
-                    site['author'] = site_author
-                    config['defaults']['author'] = site_author
+                    site["author"] = site_author
+                    config["defaults"]["author"] = site_author
 
-                site_copyright = input('Site copyright [{}]: '.format(site['copyright']))
+                site_copyright = input(
+                    "Site copyright [{}]: ".format(site["copyright"])
+                )
                 if site_copyright:
-                    site['copyright'] = site_copyright
+                    site["copyright"] = site_copyright
 
                 print()
-                print('- Plugin Options -')
+                print("- Plugin Options -")
                 print()
 
-                if getYN('Enable pretty URLs? Uses Apache .htaccess?', False):
-                    config['ignore_plugins'].remove('prettyurls')
+                if getYN("Enable pretty URLs? Uses Apache .htaccess?", False):
+                    config["ignore_plugins"].remove("prettyurls")
 
                 print()
-                print('- Template Options -')
+                print("- Template Options -")
                 print()
 
-            if getYN('Copy sample site templates?', True):
-                shutil.unpack_archive(path.join(nib.cwd, 'sample.zip'), format='zip')
+            if getYN("Copy sample site templates?", True):
+                shutil.unpack_archive(path.join(nib.cwd, "sample.zip"), format="zip")
 
-            nib.yaml.save('config.nib', config)
+            nib.yaml.save("config.nib", config)
             print()
-            print('Wizard complete.  Run `nib build` to generate site.')
+            print("Wizard complete.  Run `nib build` to generate site.")
 
-        elif options.action == 'help':
+        elif options.action == "help":
             if options.command is None:
                 parser.print_help()
                 sys.exit(0)
@@ -230,12 +260,14 @@ if __name__ == '__main__':
                     subparsers.choices[command].print_help()
                     sys.exit(0)
 
-            sys.stderr.write('No help available for command "{}"\n'.format(options.command))
+            sys.stderr.write(
+                'No help available for command "{}"\n'.format(options.command)
+            )
             sys.exit(1)
 
     except Exception as e:
-        if (options.debug):
+        if options.debug:
             raise
 
-        sys.stderr.write('Error: {}\n'.format(e))
+        sys.stderr.write("Error: {}\n".format(e))
         sys.exit(1)
